@@ -1,0 +1,24 @@
+<archetype-descriptor
+        name="gRPCtoJAXRS-archetype">
+        
+   <requiredProperties>
+      <requiredProperty key="URL"/>
+      <requiredProperty key="root-class"/>
+      <requiredProperty key="resteasy-version"/>
+   </requiredProperties>
+  
+   <fileSets>
+       <!--fileSet filtered="true">
+          <directory>src/main/java</directory>
+       </fileSet-->
+       <fileSet filtered="true">
+          <directory>src/main/resources</directory>
+       </fileSet>
+       <fileSet filtered="true">
+          <directory>src/main/webapp/</directory>
+       </fileSet>
+       <fileSet filtered="true">
+          <directory>src/test/java</directory>
+       </fileSet>
+   </fileSets>
+</archetype-descriptor>
