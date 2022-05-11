@@ -19,6 +19,7 @@
       <jaxrs.project.modulename></jaxrs.project.modulename>
       <context></context>
       <inWildFly>true</inWildFly>
+      <release.type>snapshot</release.type>
    </properties>
   
   <!-- DistributionManagement -->
@@ -363,6 +364,18 @@
                      </systemProperties>
                   </configuration>
                </execution>
+               <execution>
+                  <id>genjar</id>
+                  <phase>verify</phase>
+                  <goals>
+                     <goal>exec</goal>
+                  </goals>
+                  <configuration>
+                     <executable>${basedir}/src/main/resources/buildjar</executable>
+                     <commandlineArgs>${groupId} ${artifactId}.grpc ${version} ${release.type}</commandlineArgs>
+                     <cleanupDaemonThreads>true</cleanupDaemonThreads>
+                  </configuration>
+               </execution>
             </executions>
          </plugin>
 
@@ -408,6 +421,25 @@
             </executions>
          </plugin>
 
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+               <execution>
+                  <id>chmod</id>
+                  <phase>package</phase>
+                  <configuration>
+                     <target name="chmod">
+                        <chmod file="${project.basedir}/src/main/resources/buildjar" perm="755"/>
+                     </target>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
       </plugins>
    </build>
 </project>

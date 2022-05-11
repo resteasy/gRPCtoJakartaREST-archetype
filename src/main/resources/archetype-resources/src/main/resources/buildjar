@@ -1,18 +1,29 @@
 #!/bin/tcsh
 
-if ($#argv != 3) then
+if ($#argv != 4) then
     echo "give"
     echo "  groupId"
     echo "  artifactId"
     echo "  version"
+    echo "  snapshot or release"
     exit 1
 endif
 
 set GROUP_ID=$1
 set ARTIFACT_ID=$2
 set VERSION=$3
+set RELEASE_TYPE=$4
+
 set JAR=`pwd`/target/${ARTIFACT_ID}-${VERSION}.jar
+
+if (${RELEASE_TYPE} == "snapshot") then
+   set URL=https://repository.jboss.org/nexus/content/repositories/snapshots/
+else
+   set URL=https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/
+endif
+
 echo Creating $JAR
+echo Deploying to $URL
 
 echo Adding target/classes
 cd target/classes; find . |xargs jar cvf $JAR; cd ../..
@@ -21,3 +32,6 @@ echo Adding target/test-classes
 cd target/test-classes; find . | xargs jar uvf $JAR; cd ../..
 
 mvn install:install-file -Dfile=${JAR} -DgroupId=${GROUP_ID} -DartifactId=${ARTIFACT_ID} -Dpackaging=jar -Dversion=${VERSION}
+
+mvn deploy:deploy-file -Dfile=${JAR} -DgroupId=${GROUP_ID} -DartifactId=${ARTIFACT_ID} -Dpackaging=jar -Dversion=${VERSION} \
+  -DrepositoryId=jboss-${4}s-repository -Durl=${URL}
