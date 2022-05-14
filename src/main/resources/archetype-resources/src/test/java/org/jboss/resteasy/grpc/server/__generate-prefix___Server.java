@@ -1,4 +1,4 @@
-package test.grpc;
+package org.jboss.resteasy.grpc.server;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;

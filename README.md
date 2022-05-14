@@ -12,8 +12,10 @@ incorporates the steps necessary to create them.
 
 gRPCtoJAXRS_archetype takes the GAV of an existing Jakarta RESTful Web Services project, called the **target project**,
 and creates a new project which can generate a WAR with all of the pieces needed to interface between a gRPC client 
-and the target project. We will refer to the generated project as the corresponding
+and a copy of the target project. We will refer to the generated project as the corresponding
 **gRPCtoJkRWS project**.
+
+### Creating the gRPCtoJkRWS project
 
 To create a gRPCtoJkRWS project from an existing project, the archetype needs several 
 pieces of information:
@@ -22,96 +24,110 @@ pieces of information:
 
  2. the intended GAV of the gRPCtoJkRWS project
 
- 3. "generate-package" parameter: the Java package to use for generated classes
+ 3. "generate-prefix" parameter: the prefix to use for names of generated classes
 
- 4. "resteasy-version" parameter
+ 4. "generate-package" parameter: the Java package to use for generated classes
+
+ 5. "resteasy-version" parameter
 
 For example,
 
         mvn archetype:generate \
-          -DarchetypeGroupId=org.jboss.resteasy -DarchetypeArtifactId=gRPCtoJAXRS-archetype -DarchetypeVersion=0.0.1-SNAPSHOT \
-          -DgroupId=jaxrs.example -DartifactId=jaxrs.example -Dversion=0.0.1-SNAPSHOT \
-          -Dpackage=org.jboss.resteasy.example -Droot-class=CC1
+          -DarchetypeGroupId=org.jboss.resteasy -DarchetypeArtifactId=gRPCtoJAXRS-archetype -DarchetypeVersion=0.0.3-SNAPSHOT \
+          -DgroupId=jaxrs.example -DartifactId=jaxrs.example -Dversion=0.0.2-SNAPSHOT \
+          -Dgenerate-prefix=CC1 -Dgenerate-package=jaxrs.example
 
-See [jaxrs.example:jaxrs.example:0.0.1-SNAPSHOT](https://github.com/ronsigal/jaxrs-example) 
+See [jaxrs.example:jaxrs.example:0.0.2-SNAPSHOT](https://github.com/ronsigal/jaxrs-example) 
 for the sample code mentioned here.
 
 The result is a new gRPCtoJkRWS maven project named by its artifactId. Its initial contents are
 
  1. pom.xml
+  
+ 2. a Jakarta RESTful Web Services resource class named `<generate-prefix>_Server`
  
- 2. src/main/webapp/WEB-INF/web.xml
- 
- 3. a Jakarta RESTful Web Services resource class named <root.class>_Server
- 
- 4. a template for a Jakarta RESTful Web Services test client named <root.class>_Client
- 
-Building the gRPCtoJkRWS project downloads the src/main/java contents of the target 
-project, and builds all of the generated classes described in 
-[RESTEasy grpc provider](https://github.com/ronsigal/Resteasy/tree/protobuf3/providers/resteasy-protobuf-provider).
+ 3. an empty beans.xml file
 
-The following parameters are needed:
-
- 1. resteasy.version
+ 4. a buildjar shell script which can package all of the necessary files in a JAR file [may go away]
  
- 2. servlet.name [elaborate here]
- 
- 3. "root-class" parameter: the prefix to use for generated classes [Bad name: change to "root"]
+### Building the gRPCtoJkRWS project
 
+Building the gRPCtoJkRWS project downloads the contents of the target 
+project and builds all of the generated classes described in the
+[RESTEasy User Guide](https://resteasy.dev/docs/).
+
+The following parameter is required:
+ 
+ 1. servlet.name: the name of the servlet managing the generated WAR
+
+The following parameters are optional:
+
+ 2. extra.classes: necessary entity / response classes not detected by the heuristic in `org.jboss.resteasy.grpc.protobuf.JavaToProtobufGenerator`
+    in grpc-bridge
+    
+ 3. "inWildfly": "true" if and only if the gRPCtoJkRWS willl run in a version of WildFly supplied with the grpc subsystem. Defaults to "true".
+
+The "extra.classes" parameter has the syntax
+
+    (source-directory fully-qualified-name) [',' source-directory fully-qualified-name]*
+ 
 For example,
 
-        mvn -Dresteasy.version=4.7.0.Final -Dservlet.name=org.jboss.resteasy.example.ExampleApp -Droot.class=CC1 clean install
-    
+     mvn -Dservlet.name=org.jboss.resteasy.example.ExampleApp \
+         -Dextra.classes=/home/rsigal/tmp/grpc.050922/git.jaxrs.example.grpc/jaxrs.example/src/main/java:org.jboss.resteasy.example.CC7,/home/rsigal/tmp/grpc.050922/git.jaxrs.example.grpc/jaxrs.example/src/main/java:org.jboss.resteasy.example.CC6 \
+         clean install
+        
 The gRPCtoJkRWS project will be populated as follows
 
- 1. src/main/java will be copied from the target project
+ 1. the src directory will be copied from the target project
  
- 2. src/main/proto will hold the <root.class>.proto file
+ 2. src/main/proto will hold the `<generate-prefix>.proto` file
  
- 3. src/main/webapp/WEB-INF will hold web.xml
- 
- 4. src/test/java will hold test.grpc.<root.class>_Client.java and test.grpc.<root.class>_Server.java
- 
- 5. target/generated-sources/protobuf/java will hold <root.class>_proto.java, compiled 
-    from <root.class>.proto
+ 3. target/generated-sources/protobuf/java will hold `<generate-prefix>_proto.java`, compiled 
+    from `<generate-prefix>.proto`
     
- 6. target/generated-sources/protobuf/grpc-java will hold the following generated classes:
+ 4. target/generated-sources/protobuf/grpc-java will hold the following generated classes:
  
-    A. `<root.class>ServiceGrpc.java` (generated by the proto compiler gRPC plugin)
+    A. `<generate-prefix>ServiceGrpc.java` (generated by the proto compiler gRPC plugin)
     
-    B. `<root.class>ServiceGrpcImpl.java` (generated by `org.jboss.resteasy.grpc.JaxrsImplBaseExtender`)
+    B. `<generate-prefix>ServiceGrpcImpl.java` (generated by `org.jboss.resteasy.grpc.JaxrsImplBaseExtender`)
     
-    C. `<root.class>_JavabufTranslator.java` (generated by `org.jboss.resteasy.plugins.protobuf.JavabufTranslatorGenerator`)
+    C. `<generate-prefix>_JavabufTranslator.java` (generated by `org.jboss.resteasy.grpc.protobuf.JavabufTranslatorGenerator`)
     
-    D. `<root.class>MessageBodyReaderWriter.java` (generated by `org.jboss.resteasy.plugins.protobuf.ReaderWriterGenerator`)
+    D. `<generate-prefix>MessageBodyReaderWriter.java` (generated by `org.jboss.resteasy.grpc.protobuf.ReaderWriterGenerator`)
+    
+ 5. src/test/java will hold `org.jboss.resteasy.grpc.server.<generate-prefix>_Server.java`
     
 The principal output is a WAR in the target directory which can be deployed to WildFly.
 
 ## Using the Web Archive
 
-The class ${root-class}_Server is a Jakarta RESTful Web Services resource that can start up a gRPC server 
-by calling
+If the parameter "inWildfly" is set to "true", then `<generate-prefix>ServiceGrpcImpl` will be generated with the
+annotation `@org.wildfly.grpc.GrpcService` from the WildFly grpc subsystem. That annotation allows the grpc subsystem
+to discover the gRPCtoJkRWS WAR and associate it with the grpc port.
 
-        http://localhost:8080/jaxrs.example.grpc-0.0.1-SNAPSHOT/root/grpcserver/start
+If "inWildfly" is set to "false" or the WAR is deployed to some environment other than WildFly with the grpc subsystem, the
+class `<generate-prefix>_Server` is a Jakarta RESTful Web Services resource that can be used to start up a gRPC server 
+upon receiving an invocation on path "grpcserver/start". For example,
+
+        http://localhost:8080/jaxrs.example.grpc-0.0.2-SNAPSHOT/root/grpcserver/start
         
-Once the gRPC server is started, the Jakarta RESTful Web Services resources in the target project can be 
-invoked by an appropriate gRPC client. The class ${root-class}_Client is a JUnit test
-class with a number of tests. 
+(where "root" is defined by @ApplicationPath("root") in `org.jboss.resteasy.example.ExampleApp`).
+        
+Once the gRPC server is started, the Jakarta RESTful Web Services resources in the gRPCtoJkRWS project (copied from the
+target project) can be invoked by an appropriate gRPC client. For some sample client code, see
+`org.jboss.resteasy.test.grpc.GrpcToJaxrsTest` in RESTEasy's integrated-test module.
 
- 1. There are some hard coded tests like `testInt()` and `testInteger()` that verify 
-    that basic types are handled correctly.
-    
- 2. There is also a template method, commented out, that indicates how to test the 
-    specific methods of the Jakarta RESTful Web Services resources. The appropriate javabuf objects need to be
-    created and passed to the appropriate gRPC client stub method. Then the result 
-    needs to be verified.
+**Note.**
 
-## To Do
+`<generate-prefix>ServiceGrpcImpl` retrieves the `org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher`
+that handles the servlet. For this to work, there has to be a Jakarta RESTful Web Services call (as opposed to a gRPC call)
+to any resource method in the WAR. Once that happens, gRPC calls will succeed.
 
-gRPCtoJAXRS_archetype is a work in progress. More needs to be done, including:
+For example, the @BeforeClass method in GrpcToJaxrsTest includes the code
 
- 1. Additional primitive and wrapper tests
- 
- 2. More testing.
- 
- 3. Probably lots of other stuff.
+     Client client = ClientBuilder.newClient();
+     Response response = client.target(generateURL("/p/context")).request().get();
+     Assert.assertEquals(200, response.getStatus());
+
+Alternatively, the call can be made from a browser or by cURL.
