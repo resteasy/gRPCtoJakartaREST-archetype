@@ -13,12 +13,12 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Context;
 
-import ${package}.${root-class}ServiceGrpcImpl;
+import ${generate-package}.${generate-prefix}ServiceGrpcImpl;
 
 @Path("grpcserver")
-public class ${root-class}_Server {
+public class ${generate-prefix}_Server {
 
-   private static final Logger logger = Logger.getLogger(${root-class}_Server.class.getName());
+   private static final Logger logger = Logger.getLogger(${generate-prefix}_Server.class.getName());
    private static ServletContext context;
    private static int PORT = 8082;
    private Server server;
@@ -27,7 +27,7 @@ public class ${root-class}_Server {
    @GET
    public String startGRPC(@Context HttpServletRequest request) throws Exception {
       context = request.getServletContext();
-      final ${root-class}_Server server = new ${root-class}_Server();
+      final ${generate-prefix}_Server server = new ${generate-prefix}_Server();
       new Thread() {
          public void run() {
             try {
@@ -54,7 +54,7 @@ public class ${root-class}_Server {
    public String startContext(@Context HttpServletRequest request) throws Exception {
       System.out.println(request.getClass());
       context = request.getServletContext();
-      final ${root-class}_Server server = new ${root-class}_Server();
+      final ${generate-prefix}_Server server = new ${generate-prefix}_Server();
       System.out.println("context: " + context);
       return "Got " + this + " context";
    }
@@ -75,7 +75,7 @@ public class ${root-class}_Server {
     */
    private void start() throws IOException {
       server = ServerBuilder.forPort(PORT)
-            .addService(new ${root-class}ServiceGrpcImpl())
+            .addService(new ${generate-prefix}ServiceGrpcImpl())
             .build()
             .start();
       logger.info("Server started, listening on " + PORT);
@@ -85,7 +85,7 @@ public class ${root-class}_Server {
             // Use stderr here since the logger may have been reset by its JVM shutdown hook.
             System.err.println("*** shutting down gRPC server since JVM is shutting down");
             try {
-               ${root-class}_Server.this.stop();
+               ${generate-prefix}_Server.this.stop();
             } catch (InterruptedException e) {
                e.printStackTrace(System.err);
             }
@@ -113,7 +113,7 @@ public class ${root-class}_Server {
     * Main launches the server from the command line.
     */
    public static void main(String[] args) throws IOException, InterruptedException {
-      final ${root-class}_Server server = new ${root-class}_Server();
+      final ${generate-prefix}_Server server = new ${generate-prefix}_Server();
       server.start();
       server.blockUntilShutdown();
    }

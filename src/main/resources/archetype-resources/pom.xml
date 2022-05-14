@@ -11,9 +11,9 @@
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <maven.compiler.source>11</maven.compiler.source>
       <maven.compiler.target>11</maven.compiler.target>
-      <package>default</package>
+      <generate.package>${generate-package}</generate.package>
+      <generate.prefix>${generate-prefix}</generate.prefix>
       <resteasy.version>${resteasy-version}</resteasy.version>
-      <root.class>default</root.class>
       <servlet.name>default</servlet.name>
       <extra.classes></extra.classes>
       <jaxrs.project.modulename></jaxrs.project.modulename>
@@ -287,9 +287,9 @@
                      <cleanupDaemonThreads>false</cleanupDaemonThreads>
                      <arguments>
                         <argument>${project.basedir}</argument>
-                        <argument>${package}</argument>
-                        <argument>${package}</argument>
-                        <argument>${root.class}</argument>
+                        <argument>${generate.package}</argument>
+                        <argument>${generate.package}</argument>
+                        <argument>${generate-prefix}</argument>
                         <argument>${extra.classes}</argument>
                      </arguments>
                      <systemProperties>
@@ -311,7 +311,7 @@
                      <cleanupDaemonThreads>false</cleanupDaemonThreads>
                      <arguments>
                         <argument>${project.basedir}/target/generated-sources/protobuf/java</argument>
-                        <argument>${package}.${root.class}</argument>
+                        <argument>${generate.package}.${generate-prefix}</argument>
                      </arguments>
                      <systemProperties>
                         <systemProperty>
@@ -331,8 +331,8 @@
                      <mainClass>org.jboss.resteasy.grpc.protobuf.ReaderWriterGenerator</mainClass>
                      <cleanupDaemonThreads>false</cleanupDaemonThreads>
                      <arguments>
-                        <argument>${package}.${root.class}_proto</argument>
-                        <argument>${root.class}</argument>
+                        <argument>${generate.package}.${generate-prefix}_proto</argument>
+                        <argument>${generate-prefix}</argument>
                      </arguments>
                      <systemProperties>
                         <systemProperty>
@@ -352,8 +352,9 @@
                      <mainClass>org.jboss.resteasy.grpc.JaxrsImplBaseExtender</mainClass>
                      <cleanupDaemonThreads>false</cleanupDaemonThreads>
                      <arguments>
-                        <argument>${root.class}</argument>
+                        <argument>${generate-prefix}</argument>
                         <argument>${servlet.name}</argument>
+                        <argument>${generate.package}</argument>
                         <argument>${inWildFly}</argument>
                      </arguments>
                      <systemProperties>

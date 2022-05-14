@@ -2,8 +2,8 @@
         name="gRPCtoJAXRS-archetype">
         
    <requiredProperties>
-      <requiredProperty key="URL"/>
-      <requiredProperty key="root-class"/>
+      <requiredProperty key="generate-prefix"/>
+      <requiredProperty key="generate-package"/>
       <requiredProperty key="resteasy-version"/>
    </requiredProperties>
   

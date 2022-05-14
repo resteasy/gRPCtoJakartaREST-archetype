@@ -1,31 +1,30 @@
 # gRPCtoJAXRS_archetype
 
-The [RESTEasy grpc provider](https://github.com/ronsigal/Resteasy/tree/protobuf3/providers/resteasy-protobuf-provider)
-supports exposing JAX-RS services to gRPC clients. See the README.md file there for a 
+The [RESTEasy grpc-bridge facility](https://github.com/resteasy/resteasy) [UPDATE URL]
+supports exposing Jakarta RESTful Web Services resources to gRPC clients. See the 
+[RESTEasy User Guide](https://resteasy.dev/docs/) for a more detailed
 discussion of the various mechanisms and classes involved.
 
-There are a lot of pieces to create, and this maven archetype includes a pom.xml which 
+There are a number of pieces to create, and this maven archetype includes a pom.xml which 
 incorporates the steps necessary to create them.
 
 ## Using the archetype
 
-gRPCtoJAXRS_archetype takes the GAV of an existing JAX-RS project, called the **target project**,
-and creates a new project which
-can generate a WAR with all of the pieces needed to interface between a gRPC client 
-and the existing project. We will refer to the generated project as the corresponding
-**gRPCtoJAXRS project**.
+gRPCtoJAXRS_archetype takes the GAV of an existing Jakarta RESTful Web Services project, called the **target project**,
+and creates a new project which can generate a WAR with all of the pieces needed to interface between a gRPC client 
+and the target project. We will refer to the generated project as the corresponding
+**gRPCtoJkRWS project**.
 
-To create a gRPCtoJAXRS project from an existing project, the archetype needs several 
+To create a gRPCtoJkRWS project from an existing project, the archetype needs several 
 pieces of information:
 
- 1. the GAV of the original project
+ 1. the GAV of the target project
 
- 2. the intended GAV of the gRPCtoJAXRS project
+ 2. the intended GAV of the gRPCtoJkRWS project
 
- 3. the package of the target JAX-RS resource class
+ 3. "generate-package" parameter: the Java package to use for generated classes
 
- 4. root-class, the simple name of the target JAX-RS resource class [Note "-" rather 
-    than ".".] 
+ 4. "resteasy-version" parameter
 
 For example,
 
@@ -37,17 +36,17 @@ For example,
 See [jaxrs.example:jaxrs.example:0.0.1-SNAPSHOT](https://github.com/ronsigal/jaxrs-example) 
 for the sample code mentioned here.
 
-The result is a new gRPCtoJAXRS maven project named by its artifactId. Its initial contents are
+The result is a new gRPCtoJkRWS maven project named by its artifactId. Its initial contents are
 
  1. pom.xml
  
  2. src/main/webapp/WEB-INF/web.xml
  
- 3. a JAX-RS resource class named <root.class>_Server
+ 3. a Jakarta RESTful Web Services resource class named <root.class>_Server
  
- 4. a template for a JAX-RS test client named <root.class>_Client
+ 4. a template for a Jakarta RESTful Web Services test client named <root.class>_Client
  
-Building the gRPCtoJAXRS project downloads the src/main/java contents of the target 
+Building the gRPCtoJkRWS project downloads the src/main/java contents of the target 
 project, and builds all of the generated classes described in 
 [RESTEasy grpc provider](https://github.com/ronsigal/Resteasy/tree/protobuf3/providers/resteasy-protobuf-provider).
 
@@ -57,13 +56,13 @@ The following parameters are needed:
  
  2. servlet.name [elaborate here]
  
- 3. root.class
- 
+ 3. "root-class" parameter: the prefix to use for generated classes [Bad name: change to "root"]
+
 For example,
 
         mvn -Dresteasy.version=4.7.0.Final -Dservlet.name=org.jboss.resteasy.example.ExampleApp -Droot.class=CC1 clean install
     
-The gRPCtoJAXRS project will be populated as follows
+The gRPCtoJkRWS project will be populated as follows
 
  1. src/main/java will be copied from the target project
  
@@ -90,12 +89,12 @@ The principal output is a WAR in the target directory which can be deployed to W
 
 ## Using the Web Archive
 
-The class ${root-class}_Server is a JAX-RS resource that can start up a gRPC server 
+The class ${root-class}_Server is a Jakarta RESTful Web Services resource that can start up a gRPC server 
 by calling
 
         http://localhost:8080/jaxrs.example.grpc-0.0.1-SNAPSHOT/root/grpcserver/start
         
-Once the gRPC server is started, the JAX-RS resources in the target project can be 
+Once the gRPC server is started, the Jakarta RESTful Web Services resources in the target project can be 
 invoked by an appropriate gRPC client. The class ${root-class}_Client is a JUnit test
 class with a number of tests. 
 
@@ -103,7 +102,7 @@ class with a number of tests.
     that basic types are handled correctly.
     
  2. There is also a template method, commented out, that indicates how to test the 
-    specific methods of the JAX-RS resources. The appropriate javabuf objects need to be
+    specific methods of the Jakarta RESTful Web Services resources. The appropriate javabuf objects need to be
     created and passed to the appropriate gRPC client stub method. Then the result 
     needs to be verified.
 
