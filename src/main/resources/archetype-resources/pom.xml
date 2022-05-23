@@ -40,7 +40,7 @@
       <dependency>
          <groupId>${groupId}</groupId>
          <artifactId>${artifactId}</artifactId>
-         <version>0.0.2-SNAPSHOT</version>
+         <version>${version}</version>
          <type>war</type>
       </dependency>
       <dependency>
@@ -405,6 +405,9 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+               <forceJavacCompilerUse>true</forceJavacCompilerUse>
+            </configuration>
          </plugin>
 
          <plugin>
