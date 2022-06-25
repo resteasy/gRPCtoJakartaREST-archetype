@@ -3,6 +3,13 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
 
+    <servlet>
+        <servlet-name>${generate-prefix}Servlet</servlet-name>
+        <servlet-class>
+            org.jboss.resteasy.grpc.servlet.GrpcHttpServletDispatcher
+        </servlet-class>
+    </servlet>
+    
     <!-- 
        The intention is that ${generate-prefix}MessageBodyReaderWriter (with the help of ${generate-prefix}_JavabufTranslator)
        will handle all reading and writing of data objects. Therefore, we
@@ -14,6 +21,10 @@
     <context-param>
         <param-name>resteasy.use.builtin.providers</param-name>
         <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+        <param-value>/grpcToJaxrs</param-value>
     </context-param>
     
     <context-param>
@@ -44,5 +55,10 @@
           org.jboss.resteasy.security.doseta.ServerDigitalVerificationHeaderDecoratorFeature
        </param-value>
     </context-param>
+
+    <servlet-mapping>
+        <servlet-name>${generate-prefix}Servlet</servlet-name>
+        <url-pattern>/grpcToJaxrs/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>

@@ -23,6 +23,12 @@ public class ${generate-prefix}_Server {
    private static int PORT = 8082;
    private Server server;
 
+   @Path("getservletcontext")
+   @GET
+   public ServletContext getServletContext(@Context HttpServletRequest request) {
+      return request.getServletContext();
+   }
+
    @Path("start")
    @GET
    public String startGRPC(@Context HttpServletRequest request) throws Exception {
