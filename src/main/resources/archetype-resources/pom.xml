@@ -6,6 +6,34 @@
     <packaging>war</packaging>
     
     <name>${artifactId}</name>
+
+    <description>GRPC to JAX-RS</description>
+    <url>https://jaxrs.to.grpc</url>
+   
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>https://repository.jboss.org/licenses/apache-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/resteasy/jaxrs.example.grpc</url>
+    </scm>
+    
+    <developers>
+        <developer>
+            <id>bob</id>
+            <name>Bob</name>
+            <email>bob@bob.com</email>
+            <url>http://bob.com</url>
+            <roles>
+                <role>project-owner</role>
+            </roles>
+            <timezone>-5</timezone>
+        </developer>
+    </developers>
   
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -59,6 +87,11 @@
          <artifactId>resteasy-core</artifactId>
          <version>${resteasy.version}</version>
          <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.jboss.resteasy</groupId>
+         <artifactId>grpc-bridge-runtime</artifactId>
+         <version>${resteasy.version}</version>
       </dependency>
       <dependency>
          <groupId>org.jboss.resteasy</groupId>
