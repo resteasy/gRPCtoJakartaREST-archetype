@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.GET;
@@ -19,7 +19,8 @@ import ${generate-package}.${generate-prefix}ServiceGrpcImpl;
 public class ${generate-prefix}_Server {
 
    private static final Logger logger = Logger.getLogger(${generate-prefix}_Server.class.getName());
-   private static ServletContext context;
+   private static ServletConfig servletConfig;
+   private static ServletContext servletContext;
    private static int PORT = 8082;
    private Server server;
 
@@ -29,10 +30,19 @@ public class ${generate-prefix}_Server {
       return request.getServletContext();
    }
 
+   public static ServletConfig getServletConfig() {
+      return servletConfig;
+   }
+   
+   public static ServletContext getServletContext() {
+      return servletContext;
+   }
+   
    @Path("start")
    @GET
-   public String startGRPC(@Context HttpServletRequest request) throws Exception {
-      context = request.getServletContext();
+   public String startGRPC(@Context ServletConfig servletConfig) throws Exception {
+      ${generate-prefix}_Server.servletConfig = servletConfig;
+      servletContext = servletConfig.getServletContext();
       final ${generate-prefix}_Server server = new ${generate-prefix}_Server();
       new Thread() {
          public void run() {
@@ -59,10 +69,10 @@ public class ${generate-prefix}_Server {
    @GET
    public String startContext(@Context HttpServletRequest request) throws Exception {
       System.out.println(request.getClass());
-      context = request.getServletContext();
+      servletContext = request.getServletContext();
       final ${generate-prefix}_Server server = new ${generate-prefix}_Server();
-      System.out.println("context: " + context);
-      return "Got " + this + " context";
+      System.out.println("context: " + servletContext);
+      return "Got " + this + " servletContext";
    }
 
    @Path("stop")
@@ -72,8 +82,8 @@ public class ${generate-prefix}_Server {
    }
    
    static public ServletContext getContext() {
-      System.out.println("returning " + context);
-      return context;
+      System.out.println("returning " + servletContext);
+      return servletContext;
    }
    
    /**

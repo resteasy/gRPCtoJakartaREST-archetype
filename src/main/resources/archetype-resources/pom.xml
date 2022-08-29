@@ -230,6 +230,17 @@
                   </resource>
                </webResources>
                <failOnMissingWebXml>false</failOnMissingWebXml>
+               <packagingIncludes>
+                  WEB-INF/lib/*grpc*,
+                  WEB-INF/lib/*guava*,
+                  WEB-INF/lib/perfmark*,
+                  WEB-INF/lib/*protobuf*,
+                  WEB-INF/classes/**/*,
+                  WEB-INF/test-classes/**/*
+               </packagingIncludes>
+               <packagingExcludes>
+                  WEB-INF/lib/*grpc-bridge-${resteasy.version}.jar,
+               </packagingExcludes>
             </configuration>
          </plugin>
          
