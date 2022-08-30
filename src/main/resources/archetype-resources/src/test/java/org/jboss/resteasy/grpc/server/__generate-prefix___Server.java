@@ -68,10 +68,8 @@ public class ${generate-prefix}_Server {
    @Path("context")
    @GET
    public String startContext(@Context HttpServletRequest request) throws Exception {
-      System.out.println(request.getClass());
       servletContext = request.getServletContext();
       final ${generate-prefix}_Server server = new ${generate-prefix}_Server();
-      System.out.println("context: " + servletContext);
       return "Got " + this + " servletContext";
    }
 
@@ -82,7 +80,6 @@ public class ${generate-prefix}_Server {
    }
    
    static public ServletContext getContext() {
-      System.out.println("returning " + servletContext);
       return servletContext;
    }
    
