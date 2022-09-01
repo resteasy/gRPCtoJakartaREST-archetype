@@ -411,13 +411,25 @@
                   </configuration>
                </execution>
                <execution>
-                  <id>genjar</id>
+                  <id>buildjar</id>
                   <phase>verify</phase>
                   <goals>
                      <goal>exec</goal>
                   </goals>
                   <configuration>
                      <executable>${basedir}/src/main/resources/buildjar</executable>
+                     <commandlineArgs>${groupId} ${artifactId}.grpc ${version}</commandlineArgs>
+                     <cleanupDaemonThreads>true</cleanupDaemonThreads>
+                  </configuration>
+               </execution>
+               <execution>
+                  <id>deployjar</id>
+                  <phase>deploy</phase>
+                  <goals>
+                     <goal>exec</goal>
+                  </goals>
+                  <configuration>
+                     <executable>${basedir}/src/main/resources/deployjar</executable>
                      <commandlineArgs>${groupId} ${artifactId}.grpc ${version} ${release.type}</commandlineArgs>
                      <cleanupDaemonThreads>true</cleanupDaemonThreads>
                   </configuration>
@@ -481,6 +493,7 @@
                   <configuration>
                      <target name="chmod">
                         <chmod file="${project.basedir}/src/main/resources/buildjar" perm="755"/>
+                        <chmod file="${project.basedir}/src/main/resources/deployjar" perm="755"/>
                      </target>
                   </configuration>
                   <goals>
