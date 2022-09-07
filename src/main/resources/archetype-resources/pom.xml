@@ -211,40 +211,6 @@
 
       <plugins>
          <plugin>
-            <artifactId>maven-war-plugin</artifactId>
-            <version>3.2.3</version>
-            <configuration>
-               <overlays>
-                  <overlay>
-                     <groupId>${groupId}</groupId>
-                     <artifactId>${artifactId}</artifactId>>
-                     <excludes>
-                        <exclude>**/*</exclude>
-                     </excludes>
-                  </overlay>
-               </overlays>
-               <webResources>
-                  <resource>
-                     <directory>${basedir}/target/test-classes</directory>
-                     <targetPath>WEB-INF/classes</targetPath>
-                  </resource>
-               </webResources>
-               <failOnMissingWebXml>false</failOnMissingWebXml>
-               <packagingIncludes>
-                  WEB-INF/lib/*grpc*,
-                  WEB-INF/lib/*guava*,
-                  WEB-INF/lib/perfmark*,
-                  WEB-INF/lib/*protobuf*,
-                  WEB-INF/classes/**/*,
-                  WEB-INF/test-classes/**/*
-               </packagingIncludes>
-               <packagingExcludes>
-                  WEB-INF/lib/*grpc-bridge-${resteasy.version}.jar,
-               </packagingExcludes>
-            </configuration>
-         </plugin>
-         
-         <plugin>
             <artifactId>maven-dependency-plugin</artifactId>
             <executions>
                <execution>
@@ -504,4 +470,95 @@
          </plugin>
       </plugins>
    </build>
+   
+   <profiles>
+      <profile>
+         <id>wildfly</id>
+         <activation>
+            <property>
+               <name>inWildFly</name>
+               <value>!false</value>
+            </property>
+         </activation>
+         <build>
+            <plugins>
+               <plugin>
+                  <artifactId>maven-war-plugin</artifactId>
+                  <version>3.2.3</version>
+                  <configuration>
+                     <overlays>
+                        <overlay>
+                           <groupId>${groupId}</groupId>
+                           <artifactId>${artifactId}</artifactId>>
+                           <excludes>
+                              <exclude>**/*</exclude>
+                           </excludes>
+                        </overlay>
+                     </overlays>
+                     <webResources>
+                        <resource>
+                           <directory>${basedir}/target/test-classes</directory>
+                           <targetPath>WEB-INF/classes</targetPath>
+                        </resource>
+                     </webResources>
+                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                  <packagingIncludes>
+                     WEB-INF/classes/**/*,
+                     WEB-INF/test-classes/**/*
+                  </packagingIncludes>
+                     <packagingExcludes>
+                        WEB-INF/lib/*grpc-bridge-${resteasy.version}.jar,
+                     </packagingExcludes>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+      <profile>
+         <id>not-wildfly</id>
+         <activation>
+            <property>
+               <name>inWildFly</name>
+               <value>false</value>
+            </property>
+         </activation>
+         <build>
+            <plugins>
+               <plugin>
+                  <artifactId>maven-war-plugin</artifactId>
+                  <version>3.2.3</version>
+                  <configuration>
+                     <overlays>
+                        <overlay>
+                           <groupId>${groupId}</groupId>
+                           <artifactId>${artifactId}</artifactId>>
+                           <excludes>
+                              <exclude>**/*</exclude>
+                           </excludes>
+                        </overlay>
+                     </overlays>
+                     <webResources>
+                        <resource>
+                           <directory>${basedir}/target/test-classes</directory>
+                           <targetPath>WEB-INF/classes</targetPath>
+                        </resource>
+                     </webResources>
+                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                     <packagingIncludes>
+                        WEB-INF/lib/*grpc*,
+                        WEB-INF/lib/*guava*,
+                        WEB-INF/lib/perfmark*,
+                        WEB-INF/lib/*protobuf*,
+                        WEB-INF/classes/**/*,
+                        WEB-INF/test-classes/**/*
+                     </packagingIncludes>
+                     <packagingExcludes>
+                        WEB-INF/lib/*grpc-bridge-${resteasy.version}.jar,
+                     </packagingExcludes>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+   </profiles>
 </project>
