@@ -321,7 +321,7 @@
                      <mainClass>org.jboss.resteasy.grpc.protobuf.JavabufTranslatorGenerator</mainClass>
                      <cleanupDaemonThreads>false</cleanupDaemonThreads>
                      <arguments>
-                        <argument>${project.basedir}/target/generated-sources/protobuf/java</argument>
+                        <argument>${project.basedir}/target/generated-sources/protobuf/grpc-java</argument>
                         <argument>${generate.package}.${generate-prefix}</argument>
                      </arguments>
                      <systemProperties>
@@ -342,6 +342,7 @@
                      <mainClass>org.jboss.resteasy.grpc.protobuf.ReaderWriterGenerator</mainClass>
                      <cleanupDaemonThreads>false</cleanupDaemonThreads>
                      <arguments>
+                        <argument>${project.basedir}/target/generated-sources/protobuf/grpc-java</argument>
                         <argument>${generate.package}.${generate-prefix}_proto</argument>
                         <argument>${generate-prefix}</argument>
                      </arguments>
@@ -428,6 +429,7 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.10.1</version>
             <configuration>
                <forceJavacCompilerUse>true</forceJavacCompilerUse>
             </configuration>
