@@ -27,4 +27,4 @@ JAR=`pwd`/target/${ARTIFACT_ID}-${VERSION}.jar
 echo Deploying ${JAR}
 
 mvn deploy:deploy-file -Dfile=${JAR} -DgroupId=${GROUP_ID} -DartifactId=${ARTIFACT_ID} -Dpackaging=jar -Dversion=${VERSION} \
-  -DrepositoryId=jboss-${4}s-repository -Durl=${URL}
+  -DrepositoryId=jboss-${4}s-repository -Durl=${URL} -DgeneratePom=false
