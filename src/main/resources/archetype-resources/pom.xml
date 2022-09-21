@@ -43,7 +43,8 @@
       <generate.prefix>${generate-prefix}</generate.prefix>
       <resteasy.version>${resteasy-version}</resteasy.version>
       <servlet.name>default</servlet.name>
-      <extra.classes></extra.classes>
+      <jars></jars>
+      <classes></classes>
       <jaxrs.project.modulename></jaxrs.project.modulename>
       <context></context>
       <inWildFly>true</inWildFly>
@@ -301,12 +302,19 @@
                         <argument>${generate.package}</argument>
                         <argument>${generate.package}</argument>
                         <argument>${generate-prefix}</argument>
-                        <argument>${extra.classes}</argument>
                      </arguments>
                      <systemProperties>
                         <systemProperty>
                            <key>exec.cleanupDaemonThreads</key>
                            <value>false</value>
+                        </systemProperty>
+                        <systemProperty>
+                           <key>jars</key>
+                           <value>${jars}</value>
+                        </systemProperty>
+                        <systemProperty>
+                           <key>classes</key>
+                           <value>${classes}</value>
                         </systemProperty>
                      </systemProperties>
                   </configuration>
