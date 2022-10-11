@@ -1,6 +1,7 @@
 package org.jboss.resteasy.grpc.server;
 
-import java.io.IOException;
+import java.security.AccessController;
+import java.security.PrivilegedExceptionAction;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -45,9 +46,14 @@ public class ${generate-prefix}_Server {
       servletContext = servletConfig.getServletContext();
       final ${generate-prefix}_Server server = new ${generate-prefix}_Server();
       new Thread() {
+         @SuppressWarnings({"deprecation", "removal"})
          public void run() {
             try {
-               server.start();
+               if (System.getSecurityManager() == null) {
+                  server.start();
+               } else {
+                  AccessController.doPrivileged((PrivilegedExceptionAction<Void>) () -> {server.start(); return null;});
+               } 
                System.out.println("started gRPC server on port " + PORT);
                server.blockUntilShutdown();
             } catch (Exception e) {
@@ -86,11 +92,22 @@ public class ${generate-prefix}_Server {
    /**
     * Start gRPC server.
     */
-   private void start() throws IOException {
-      server = ServerBuilder.forPort(PORT)
-            .addService(new ${generate-prefix}ServiceGrpcImpl())
-            .build()
-            .start();
+   @SuppressWarnings({"removal", "deprecation"})
+   private void start() throws Exception {
+      if (System.getSecurityManager() == null) {
+         server = ServerBuilder.forPort(PORT)
+               .addService(new CC1ServiceGrpcImpl())
+               .build()
+               .start();
+      } else {
+         AccessController.doPrivileged((PrivilegedExceptionAction<Server>) () -> {
+            server = ServerBuilder.forPort(PORT)
+                  .addService(new CC1ServiceGrpcImpl())
+                  .build()
+                  .start();
+            return server;
+         });
+      }
       logger.info("Server started, listening on " + PORT);
       Runtime.getRuntime().addShutdownHook(new Thread() {
          @Override
@@ -125,7 +142,7 @@ public class ${generate-prefix}_Server {
    /**
     * Main launches the server from the command line.
     */
-   public static void main(String[] args) throws IOException, InterruptedException {
+   public static void main(String[] args) throws Exception, InterruptedException {
       final ${generate-prefix}_Server server = new ${generate-prefix}_Server();
       server.start();
       server.blockUntilShutdown();
