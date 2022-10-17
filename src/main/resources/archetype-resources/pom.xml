@@ -49,7 +49,26 @@
       <context></context>
       <inWildFly>true</inWildFly>
       <release.type>snapshot</release.type>
+      
+      <annotations-api.version>6.0.53</annotations-api.version>
+      <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
+      <guava.version>30.1-android</guava.version>
+      <io.grpc.version>1.39.0</io.grpc.version>
+      <jakarta.enterprise.cdi-api.version>4.0.1</jakarta.enterprise.cdi-api.version>
+      <jakarta.inject-api.version>2.0.1</jakarta.inject-api.version>
+      <jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
       <jakarta.ws.rs-api.version>3.1.0</jakarta.ws.rs-api.version>
+      <protobuf-java.version>3.17.3</protobuf-java.version>
+      <protoc-gen-grpc-java.version>1.39.0</protoc-gen-grpc-java.version>
+      <wildfly-grpc-api.version>0.0.1</wildfly-grpc-api.version>
+      
+      <build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
+      <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
+      <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+      <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+      <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
+      <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+      <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
    </properties>
   
   <!-- DistributionManagement -->
@@ -74,14 +93,19 @@
          <type>war</type>
       </dependency>
       <dependency>
-          <groupId>jakarta.ws.rs</groupId>
-          <artifactId>jakarta.ws.rs-api</artifactId>
-          <version>${jakarta.ws.rs-api.version}</version>
+         <groupId>jakarta.enterprise</groupId>
+         <artifactId>jakarta.enterprise.cdi-api</artifactId>
+         <version>${jakarta.enterprise.cdi-api.version}</version>
       </dependency>
       <dependency>
           <groupId>jakarta.servlet</groupId>
           <artifactId>jakarta.servlet-api</artifactId>
-          <version>5.0.0</version>
+          <version>${jakarta.servlet-api.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>jakarta.ws.rs</groupId>
+          <artifactId>jakarta.ws.rs-api</artifactId>
+          <version>${jakarta.ws.rs-api.version}</version>
       </dependency>
       <dependency>
          <groupId>org.jboss.resteasy</groupId>
@@ -100,119 +124,70 @@
          <version>${resteasy.version}</version>
       </dependency>
       <dependency>
-         <groupId>org.jboss.resteasy</groupId>
-         <artifactId>resteasy-servlet-initializer</artifactId>
-         <version>${resteasy.version}</version>
-      </dependency>
-      <dependency>
          <groupId>com.google.protobuf</groupId>
          <artifactId>protobuf-java</artifactId>
-         <version>3.17.3</version>
-      </dependency>
-      <dependency>
-         <groupId>jakarta.inject</groupId>
-         <artifactId>jakarta.inject-api</artifactId>
-         <version>2.0.0.RC1</version>
-      </dependency>
-      <dependency>
-         <groupId>jakarta.enterprise</groupId>
-         <artifactId>jakarta.enterprise.cdi-api</artifactId>
-         <version>4.0.0-RC5</version>
-      </dependency>
-      <dependency>
-         <groupId>junit</groupId>
-         <artifactId>junit</artifactId>
-         <version>4.12</version>
-         <scope>compile</scope> <!-- for CC1_Server -->
-      </dependency>
-      <dependency>
-         <groupId>org.codehaus.mojo</groupId>
-         <artifactId>exec-maven-plugin</artifactId>
-         <version>3.0.0</version>
+         <version>${protobuf-java.version}</version>
       </dependency>
       <dependency>
          <groupId>io.grpc</groupId>
          <artifactId>protoc-gen-grpc-java</artifactId>
-         <version>1.39.0</version>
+         <version>${protoc-gen-grpc-java.version}</version>
          <type>pom</type>
       </dependency>
       <dependency>
          <groupId>io.grpc</groupId>
-         <artifactId>grpc-netty-shaded</artifactId>
-         <version>1.39.0</version>
-      </dependency>
-      <dependency>
-         <groupId>io.grpc</groupId>
          <artifactId>grpc-protobuf</artifactId>
-         <version>1.39.0</version>
+         <version>${io.grpc.version}</version>
       </dependency>
       <dependency>
          <groupId>io.grpc</groupId>
          <artifactId>grpc-stub</artifactId>
-         <version>1.39.0</version>
+         <version>${io.grpc.version}</version>
       </dependency>
-      <dependency> <!-- necessary for Java 9+ -->
+      <dependency> <!-- For @javax.annotation.Generated in *ServiceGrpc -->
          <groupId>org.apache.tomcat</groupId>
          <artifactId>annotations-api</artifactId>
-         <version>6.0.53</version>
+         <version>${annotations-api.version}</version>
          <scope>provided</scope>
       </dependency>
       <dependency>
 	     <groupId>com.google.guava</groupId>
 	     <artifactId>guava</artifactId>
-	     <version>30.1-android</version>
-      </dependency>
-     <dependency>
-         <groupId>org.jboss.weld</groupId>
-         <artifactId>weld-spi</artifactId>
-         <version>5.0.CR2</version>
+	     <version>${guava.version}</version>
       </dependency>
       <dependency>
-         <groupId>org.jboss.weld</groupId>
-         <artifactId>weld-core-impl</artifactId>
-         <version>5.0.0.CR2</version>
-      </dependency>
-      <dependency>
-         <groupId>org.jboss.weld.module</groupId>
-         <artifactId>weld-web</artifactId>
-         <version>5.0.0.CR2</version>
-      </dependency>
-      <dependency>
-         <groupId>org.jboss.weld</groupId>
-         <artifactId>weld-api</artifactId>
-         <version>5.0.CR2</version>
-         <exclusions>
-            <exclusion>
-               <groupId>javax.enterprise</groupId>
-               <artifactId>cdi-api</artifactId>
-            </exclusion>
-         </exclusions>
-      </dependency>
-      <dependency>
-         <groupId>org.wildfly</groupId>
-         <artifactId>wildfly-weld-jakarta</artifactId>
-         <version>26.1.0.Final</version>
+         <groupId>jakarta.inject</groupId>
+         <artifactId>jakarta.inject-api</artifactId>
+         <version>${jakarta.inject-api.version}</version>
       </dependency>
       <dependency>
          <groupId>org.wildfly.extras.grpc</groupId>
          <artifactId>wildfly-grpc-api</artifactId>
-         <version>0.0.1</version>
+         <version>${wildfly-grpc-api.version}</version>
          <scope>provided</scope>
+      </dependency>
+      
+      <!-- maven plugins -->
+      <dependency>
+         <groupId>org.codehaus.mojo</groupId>
+         <artifactId>exec-maven-plugin</artifactId>
+         <version>${exec-maven-plugin.version}</version>
       </dependency>
    </dependencies>
 
    <build>
-      <extensions>
+      <!--extensions>
          <extension>
             <groupId>kr.motd.maven</groupId>
             <artifactId>os-maven-plugin</artifactId>
             <version>1.7.0</version>
          </extension>
-      </extensions>
+      </extensions-->
 
       <plugins>
          <plugin>
             <artifactId>maven-dependency-plugin</artifactId>
+            <version>${maven-dependency-plugin.version}</version>
             <executions>
                <execution>
                   <id>unpack</id>
@@ -239,7 +214,7 @@
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>build-helper-maven-plugin</artifactId>
-            <version>3.2.0</version>
+            <version>${build-helper-maven-plugin.version}</version>
             <executions>
                <execution>
                   <id>proto</id>
@@ -286,7 +261,7 @@
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>3.0.0</version>
+            <version>${exec-maven-plugin.version}</version>
             <executions>
                <execution>
                   <id>genproto</id>
@@ -415,11 +390,11 @@
          <plugin>
             <groupId>org.xolstice.maven.plugins</groupId>
             <artifactId>protobuf-maven-plugin</artifactId>
-            <version>0.6.1</version>
+            <version>${protobuf-maven-plugin.version}</version>
             <configuration>
-               <protocArtifact>com.google.protobuf:protoc:3.17.2:exe:${os.detected.classifier}</protocArtifact>
+               <protocArtifact>com.google.protobuf:protoc:3.17.3:exe:</protocArtifact>
                <pluginId>grpc-java</pluginId>
-               <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.39.0:exe:${os.detected.classifier}</pluginArtifact>
+               <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.39.0:exe:</pluginArtifact>
                <clearOutputDirectory>false</clearOutputDirectory>
             </configuration>
             <executions>
@@ -437,7 +412,7 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.10.1</version>
+            <version>${maven-compiler-plugin.version}</version>
             <configuration>
                <forceJavacCompilerUse>true</forceJavacCompilerUse>
             </configuration>
@@ -446,7 +421,7 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.2.0</version>
+            <version>${maven-source-plugin.version}</version>
             <executions>
                 <execution>
                    <id>attach-sources</id>
@@ -461,7 +436,7 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
-            <version>3.1.0</version>
+            <version>${maven-antrun-plugin.version}</version>
             <executions>
                <execution>
                   <id>chmod</id>
