@@ -110,7 +110,7 @@
          <groupId>org.jboss.resteasy</groupId>
          <artifactId>resteasy-core</artifactId>
          <version>${resteasy.version}</version>
-         <scope>provided</scope>
+         <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.jboss.resteasy</groupId>
@@ -165,7 +165,11 @@
          <version>${wildfly-grpc-api.version}</version>
          <scope>provided</scope>
       </dependency>
-      
+      <dependency>
+          <groupId>io.grpc</groupId>
+          <artifactId>grpc-netty-shaded</artifactId>
+          <version>1.39.0</version>
+      </dependency>
       <!-- maven plugins -->
       <dependency>
          <groupId>org.codehaus.mojo</groupId>
@@ -310,6 +314,10 @@
                         <systemProperty>
                            <key>exec.cleanupDaemonThreads</key>
                            <value>false</value>
+                        </systemProperty>
+                        <systemProperty>
+                           <key>exec.args</key>
+                           <value>%classpath</value>
                         </systemProperty>
                      </systemProperties>
                   </configuration>
@@ -479,6 +487,11 @@
                            </excludes>
                         </overlay>
                      </overlays>
+                     <archive>
+                        <manifestEntries>
+                           <Dependencies>jakarta.enterprise.api,com.google.protobuf,io.grpc,com.google.guava,io.netty.netty-transport,io.netty.netty-buffer,org.jboss.resteasy.grpc-bridge-runtime</Dependencies>
+                        </manifestEntries>
+                     </archive>
                      <webResources>
                         <resource>
                            <directory>${basedir}/target/test-classes</directory>
@@ -486,10 +499,14 @@
                         </resource>
                      </webResources>
                      <failOnMissingWebXml>false</failOnMissingWebXml>
-                  <packagingIncludes>
-                     WEB-INF/classes/**/*,
-                     WEB-INF/test-classes/**/*
-                  </packagingIncludes>
+                     <packagingIncludes>
+                        WEB-INF/classes/**/*,
+                        WEB-INF/test-classes/**/*,
+                        META-INF/beans.xml,
+                        META-INF/MANIFEST.MF,
+                        WEB-INF/lib/grpc-netty-shaded-1.39.0.jar,
+                        WEB-INF/lib/grpc-bridge-runtime-${resteasy.version}.jar
+                     </packagingIncludes>
                      <packagingExcludes>
                         WEB-INF/lib/*grpc-bridge-${resteasy.version}.jar,
                      </packagingExcludes>
