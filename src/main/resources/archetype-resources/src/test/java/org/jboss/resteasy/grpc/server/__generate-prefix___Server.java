@@ -96,13 +96,13 @@ public class ${generate-prefix}_Server {
    private void start() throws Exception {
       if (System.getSecurityManager() == null) {
          server = ServerBuilder.forPort(PORT)
-               .addService(new CC1ServiceGrpcImpl())
+               .addService(new ${generate-prefix}ServiceGrpcImpl())
                .build()
                .start();
       } else {
          AccessController.doPrivileged((PrivilegedExceptionAction<Server>) () -> {
             server = ServerBuilder.forPort(PORT)
-                  .addService(new CC1ServiceGrpcImpl())
+                  .addService(new ${generate-prefix}ServiceGrpcImpl())
                   .build()
                   .start();
             return server;
