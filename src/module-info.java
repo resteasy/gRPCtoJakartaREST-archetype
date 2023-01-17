@@ -1,2 +1,2 @@
-module gRPCtoJAXRS {
+module gRPCtoJakartaREST {
 }

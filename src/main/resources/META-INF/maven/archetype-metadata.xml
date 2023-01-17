@@ -1,5 +1,5 @@
 <archetype-descriptor
-        name="gRPCtoJAXRS-archetype">
+        name="gRPCtoJakartaREST-archetype">
         
    <requiredProperties>
       <requiredProperty key="generate-prefix"/>

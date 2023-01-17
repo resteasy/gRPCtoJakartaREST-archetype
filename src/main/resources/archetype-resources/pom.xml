@@ -19,7 +19,7 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/resteasy/jaxrs.example.grpc</url>
+        <url>https://github.com/resteasy/jakarta.rest.example.grpc</url>
     </scm>
     
     <developers>
@@ -45,7 +45,6 @@
       <servlet.name>default</servlet.name>
       <jars></jars>
       <classes></classes>
-      <jaxrs.project.modulename></jaxrs.project.modulename>
       <context></context>
       <inWildFly>true</inWildFly>
       <release.type>snapshot</release.type>

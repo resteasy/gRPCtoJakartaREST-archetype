@@ -24,7 +24,7 @@
     </context-param>
     <context-param>
         <param-name>resteasy.servlet.mapping.prefix</param-name>
-        <param-value>/grpcToJaxrs</param-value>
+        <param-value>/grpcToJakartaRest</param-value>
     </context-param>
     
     <context-param>
@@ -56,7 +56,7 @@
 
     <servlet-mapping>
         <servlet-name>${generate-prefix}Servlet</servlet-name>
-        <url-pattern>/grpcToJaxrs/*</url-pattern>
+        <url-pattern>/grpcToJakartaRest/*</url-pattern>
     </servlet-mapping>
 
 </web-app>
