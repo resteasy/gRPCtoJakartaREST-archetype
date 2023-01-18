@@ -54,17 +54,17 @@
       <io.grpc.version>1.50.0</io.grpc.version>
       <jakarta.enterprise.cdi-api.version>4.0.1</jakarta.enterprise.cdi-api.version>
       <jakarta.inject-api.version>2.0.1</jakarta.inject-api.version>
-      <jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
+      <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
       <jakarta.ws.rs-api.version>3.1.0</jakarta.ws.rs-api.version>
-      <protobuf-java.version>3.17.3</protobuf-java.version>
-      <protoc-gen-grpc-java.version>1.39.0</protoc-gen-grpc-java.version>
+      <protobuf-java.version>3.21.9</protobuf-java.version>
+      <protoc-gen-grpc-java.version>1.51.1</protoc-gen-grpc-java.version>
       <wildfly-grpc-api.version>0.0.1</wildfly-grpc-api.version>
       
       <build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
       <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
       <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
       <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-      <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
+      <maven-dependency-plugin.version>3.5.0</maven-dependency-plugin.version>
       <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
       <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
    </properties>
