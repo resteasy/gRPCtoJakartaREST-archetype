@@ -50,13 +50,14 @@
       <release.type>snapshot</release.type>
       
       <annotations-api.version>6.0.53</annotations-api.version>
-      <guava.version>31.0.1-jre</guava.version>
-      <io.grpc.version>1.50.0</io.grpc.version>
+      <guava.version>31.1-jre</guava.version>
+      <io.grpc.version>1.52.1</io.grpc.version>
       <jakarta.enterprise.cdi-api.version>4.0.1</jakarta.enterprise.cdi-api.version>
       <jakarta.inject-api.version>2.0.1</jakarta.inject-api.version>
       <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
       <jakarta.ws.rs-api.version>3.1.0</jakarta.ws.rs-api.version>
       <protobuf-java.version>3.21.9</protobuf-java.version>
+      <protoc.version>3.17.3</protoc.version>
       <protoc-gen-grpc-java.version>1.51.1</protoc-gen-grpc-java.version>
       <wildfly-grpc-api.version>0.0.1</wildfly-grpc-api.version>
       
@@ -69,20 +70,6 @@
       <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
    </properties>
   
-  <!-- DistributionManagement -->
-  <distributionManagement>
-    <repository>
-      <id>jboss-releases-repository</id>
-      <name>JBoss Releases Repository</name>
-      <url>https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <snapshotRepository>
-      <id>jboss-snapshots-repository</id>
-      <name>JBoss Snapshots Repository</name>
-      <url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
-  
    <dependencies>
       <dependency>
          <groupId>${groupId}</groupId>
@@ -94,6 +81,11 @@
          <groupId>jakarta.enterprise</groupId>
          <artifactId>jakarta.enterprise.cdi-api</artifactId>
          <version>${jakarta.enterprise.cdi-api.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>jakarta.inject</groupId>
+         <artifactId>jakarta.inject-api</artifactId>
+         <version>${jakarta.inject-api.version}</version>
       </dependency>
       <dependency>
           <groupId>jakarta.servlet</groupId>
@@ -127,10 +119,9 @@
          <version>${protobuf-java.version}</version>
       </dependency>
       <dependency>
-         <groupId>io.grpc</groupId>
-         <artifactId>protoc-gen-grpc-java</artifactId>
-         <version>${protoc-gen-grpc-java.version}</version>
-         <type>pom</type>
+          <groupId>io.grpc</groupId>
+          <artifactId>grpc-netty-shaded</artifactId>
+          <version>${io.grpc.version}</version>
       </dependency>
       <dependency>
          <groupId>io.grpc</groupId>
@@ -142,6 +133,12 @@
          <artifactId>grpc-stub</artifactId>
          <version>${io.grpc.version}</version>
       </dependency>
+      <dependency>
+         <groupId>io.grpc</groupId>
+         <artifactId>protoc-gen-grpc-java</artifactId>
+         <version>${protoc-gen-grpc-java.version}</version>
+         <type>pom</type>
+      </dependency>
       <dependency> <!-- For @javax.annotation.Generated in *ServiceGrpc -->
          <groupId>org.apache.tomcat</groupId>
          <artifactId>annotations-api</artifactId>
@@ -149,25 +146,15 @@
          <scope>provided</scope>
       </dependency>
       <dependency>
-	     <groupId>com.google.guava</groupId>
-	     <artifactId>guava</artifactId>
-	     <version>${guava.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>jakarta.inject</groupId>
-         <artifactId>jakarta.inject-api</artifactId>
-         <version>${jakarta.inject-api.version}</version>
+         <groupId>com.google.guava</groupId>
+         <artifactId>guava</artifactId>
+         <version>${guava.version}</version>
       </dependency>
       <dependency>
          <groupId>org.wildfly.extras.grpc</groupId>
          <artifactId>wildfly-grpc-api</artifactId>
          <version>${wildfly-grpc-api.version}</version>
          <scope>provided</scope>
-      </dependency>
-      <dependency>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-netty-shaded</artifactId>
-          <version>1.39.0</version>
       </dependency>
       <!-- maven plugins -->
       <dependency>
@@ -178,13 +165,14 @@
    </dependencies>
 
    <build>
-      <!--extensions>
+      <extensions>
          <extension>
+            <!-- generates ${os.detected.classifier} -->
             <groupId>kr.motd.maven</groupId>
             <artifactId>os-maven-plugin</artifactId>
             <version>1.7.0</version>
          </extension>
-      </extensions-->
+      </extensions>
 
       <plugins>
          <plugin>
@@ -253,7 +241,6 @@
                   <configuration>
                      <sources>
                         <source>${project.basedir}/target/generated-sources/protobuf/grpc-java/</source>
-                        <!--source>${project.basedir}/target/generatedSources/</source-->
                      </sources>
                   </configuration>
                </execution>
@@ -398,9 +385,9 @@
             <artifactId>protobuf-maven-plugin</artifactId>
             <version>${protobuf-maven-plugin.version}</version>
             <configuration>
-               <protocArtifact>com.google.protobuf:protoc:3.17.3:exe:</protocArtifact>
+               <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
                <pluginId>grpc-java</pluginId>
-               <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.39.0:exe:</pluginArtifact>
+               <pluginArtifact>io.grpc:protoc-gen-grpc-java:${protoc-gen-grpc-java.version}:exe:${os.detected.classifier}</pluginArtifact>
                <clearOutputDirectory>false</clearOutputDirectory>
             </configuration>
             <executions>
