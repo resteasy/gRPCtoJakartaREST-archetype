@@ -487,7 +487,7 @@
                      </overlays>
                      <archive>
                         <manifestEntries>
-                           <Dependencies>jakarta.enterprise.api,com.google.protobuf,io.grpc,com.google.guava,io.netty.netty-transport,io.netty.netty-buffer,org.jboss.resteasy.grpc-bridge-runtime</Dependencies>
+                           <Dependencies>org.wildfly.extension.grpc,org.jboss.resteasy.grpc-bridge-runtime</Dependencies>
                         </manifestEntries>
                      </archive>
                      <webResources>
@@ -502,7 +502,6 @@
                         WEB-INF/test-classes/**/*,
                         META-INF/beans.xml,
                         META-INF/MANIFEST.MF,
-                        WEB-INF/lib/grpc-netty-shaded-1.39.0.jar,
                         WEB-INF/lib/grpc-bridge-runtime-${resteasy.version}.jar
                      </packagingIncludes>
                      <packagingExcludes>
