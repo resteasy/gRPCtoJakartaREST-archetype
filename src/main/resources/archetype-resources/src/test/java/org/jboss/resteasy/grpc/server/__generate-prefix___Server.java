@@ -75,7 +75,6 @@ public class ${generate-prefix}_Server {
    @GET
    public String startContext(@Context HttpServletRequest request) throws Exception {
       servletContext = request.getServletContext();
-      final ${generate-prefix}_Server server = new ${generate-prefix}_Server();
       return "Got " + this + " servletContext";
    }
 

@@ -355,6 +355,7 @@
                         <argument>${generate-prefix}</argument>
                         <argument>${servlet.name}</argument>
                         <argument>${generate.package}</argument>
+                        <argument>${artifactId}.grpc-${version}</argument>
                         <argument>${inWildFly}</argument>
                      </arguments>
                      <systemProperties>
