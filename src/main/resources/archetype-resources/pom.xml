@@ -58,7 +58,7 @@
       <servlet.name>default</servlet.name>
       <jars></jars>
       <classes></classes>
-      <context></context>
+      <context>${context}</context>
       <inWildFly>true</inWildFly>
       <release.type>snapshot</release.type>
       
@@ -355,7 +355,7 @@
                         <argument>${generate-prefix}</argument>
                         <argument>${servlet.name}</argument>
                         <argument>${generate.package}</argument>
-                        <argument>${artifactId}.grpc-${version}</argument>
+                        <argument>${context}</argument>
                         <argument>${inWildFly}</argument>
                      </arguments>
                      <systemProperties>
