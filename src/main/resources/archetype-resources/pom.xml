@@ -58,7 +58,6 @@
       <servlet.name>default</servlet.name>
       <jars></jars>
       <classes></classes>
-      <context>${context}</context>
       <inWildFly>true</inWildFly>
       <release.type>snapshot</release.type>
       
@@ -355,8 +354,6 @@
                         <argument>${generate-prefix}</argument>
                         <argument>${servlet.name}</argument>
                         <argument>${generate.package}</argument>
-                        <argument>${context}</argument>
-                        <argument>${inWildFly}</argument>
                      </arguments>
                      <systemProperties>
                         <systemProperty>
