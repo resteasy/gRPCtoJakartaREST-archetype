@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.GET;
@@ -16,34 +15,39 @@ import jakarta.ws.rs.core.Context;
 
 import ${generate-package}.${generate-prefix}ServiceGrpcImpl;
 
+@SuppressWarnings("removal")
 @Path("grpcserver")
 public class ${generate-prefix}_Server {
 
-   private static final Logger logger = Logger.getLogger(${generate-prefix}_Server.class.getName());
-   private static ServletConfig servletConfig;
+   private static final Logger logger = Logger.getLogger(CC1_Server.class.getName());
    private static ServletContext servletContext;
    private static int PORT = 8082;
    private Server server;
 
-   @Path("getservletcontext")
-   @GET
-   public ServletContext getServletContext(@Context HttpServletRequest request) {
-      return request.getServletContext();
+   /**
+    * Main launches the server from the command line.
+    */
+   public static void main(String[] args) throws Exception, InterruptedException {
+      final CC1_Server server = new CC1_Server();
+      server.start();
+      server.blockUntilShutdown();
    }
 
-   public static ServletConfig getServletConfig() {
-      return servletConfig;
-   }
-   
    public static ServletContext getServletContext() {
       return servletContext;
+   }
+
+   @Path("context")
+   @GET
+   public String startContext(@Context HttpServletRequest request) throws Exception {
+      servletContext = request.getServletContext();
+      return "Got " + this + " servletContext";
    }
    
    @Path("start")
    @GET
-   public String startGRPC(@Context ServletConfig servletConfig) throws Exception {
-      ${generate-prefix}_Server.servletConfig = servletConfig;
-      servletContext = servletConfig.getServletContext();
+   public String startGRPC(@Context HttpServletRequest request) throws Exception {
+      servletContext = request.getServletContext();
       final ${generate-prefix}_Server server = new ${generate-prefix}_Server();
       new Thread() {
          @SuppressWarnings({"deprecation", "removal"})
@@ -54,7 +58,7 @@ public class ${generate-prefix}_Server {
                } else {
                   AccessController.doPrivileged((PrivilegedExceptionAction<Void>) () -> {server.start(); return null;});
                } 
-               System.out.println("started gRPC server on port " + PORT);
+               logger.info("started gRPC server on port " + PORT);
                server.blockUntilShutdown();
             } catch (Exception e) {
                e.printStackTrace();
@@ -67,27 +71,17 @@ public class ${generate-prefix}_Server {
    @Path("ready")
    @GET
    public String ready() {
-	   System.out.println("gRPC server ready");
+	   logger.info("gRPC server ready");
 	   return "ready";
-   }
-
-   @Path("context")
-   @GET
-   public String startContext(@Context HttpServletRequest request) throws Exception {
-      servletContext = request.getServletContext();
-      return "Got " + this + " servletContext";
    }
 
    @Path("stop")
    @GET
    public void stopGRPC() throws Exception {
+      logger.info("stopping gRPC server on port " + PORT);
       stop();
    }
-   
-   static public ServletContext getContext() {
-      return servletContext;
-   }
-   
+
    /**
     * Start gRPC server.
     */
@@ -123,6 +117,9 @@ public class ${generate-prefix}_Server {
       });
    }
 
+   /**
+    * Stop gRPC server.
+    */
    private void stop() throws InterruptedException {
       if (server != null) {
          server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
@@ -136,15 +133,6 @@ public class ${generate-prefix}_Server {
       if (server != null) {
          server.awaitTermination();
       }
-   }
-
-   /**
-    * Main launches the server from the command line.
-    */
-   public static void main(String[] args) throws Exception, InterruptedException {
-      final ${generate-prefix}_Server server = new ${generate-prefix}_Server();
-      server.start();
-      server.blockUntilShutdown();
    }
 }
 
