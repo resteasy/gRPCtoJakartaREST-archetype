@@ -11,7 +11,7 @@
     </servlet>
     
     <!-- 
-       The intention is that ${generate-prefix}MessageBodyReaderWriter (with the help of ${generate-prefix}_JavabufTranslator)
+       The intention is that ${generate-prefix}MessageBodyReaderWriter (with the help of ${generate-prefix}JavabufTranslator)
        will handle all reading and writing of data objects. Therefore, we
 
        1. eliminate all builtin providers, and then

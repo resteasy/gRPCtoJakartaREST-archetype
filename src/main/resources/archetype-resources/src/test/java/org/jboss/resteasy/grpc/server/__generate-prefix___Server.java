@@ -19,7 +19,7 @@ import ${generate-package}.${generate-prefix}ServiceGrpcImpl;
 @Path("grpcserver")
 public class ${generate-prefix}_Server {
 
-   private static final Logger logger = Logger.getLogger(CC1_Server.class.getName());
+   private static final Logger logger = Logger.getLogger(${generate-prefix}_Server.class.getName());
    private static ServletContext servletContext;
    private static int PORT = 8082;
    private Server server;
@@ -28,7 +28,7 @@ public class ${generate-prefix}_Server {
     * Main launches the server from the command line.
     */
    public static void main(String[] args) throws Exception, InterruptedException {
-      final CC1_Server server = new CC1_Server();
+      final ${generate-prefix}_Server server = new ${generate-prefix}_Server();
       server.start();
       server.blockUntilShutdown();
    }
