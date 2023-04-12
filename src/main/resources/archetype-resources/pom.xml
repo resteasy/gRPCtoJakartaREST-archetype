@@ -71,7 +71,6 @@
       <protobuf-java.version>3.21.9</protobuf-java.version>
       <protoc.version>3.21.11</protoc.version>
       <protoc-gen-grpc-java.version>1.51.1</protoc-gen-grpc-java.version>
-      <wildfly-grpc-api.version>0.0.1</wildfly-grpc-api.version>
       
       <build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
       <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
@@ -161,12 +160,6 @@
 	     <groupId>com.google.guava</groupId>
 	     <artifactId>guava</artifactId>
 	     <version>${guava.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>org.wildfly.extras.grpc</groupId>
-         <artifactId>wildfly-grpc-api</artifactId>
-         <version>${wildfly-grpc-api.version}</version>
-         <scope>provided</scope>
       </dependency>
       <!-- maven plugins -->
       <dependency>
