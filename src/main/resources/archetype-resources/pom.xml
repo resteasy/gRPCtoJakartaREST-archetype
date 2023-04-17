@@ -55,7 +55,6 @@
       <generate.package>${generate-package}</generate.package>
       <generate.prefix>${generate-prefix}</generate.prefix>
       <resteasy.version>${resteasy-version}</resteasy.version>
-      <servlet.name>default</servlet.name>
       <jars></jars>
       <classes></classes>
       <inWildFly>true</inWildFly>
@@ -345,7 +344,7 @@
                      <cleanupDaemonThreads>false</cleanupDaemonThreads>
                      <arguments>
                         <argument>${generate-prefix}</argument>
-                        <argument>${servlet.name}</argument>
+                        <argument>${generate-prefix}Servlet</argument>
                         <argument>${generate.package}</argument>
                      </arguments>
                      <systemProperties>
