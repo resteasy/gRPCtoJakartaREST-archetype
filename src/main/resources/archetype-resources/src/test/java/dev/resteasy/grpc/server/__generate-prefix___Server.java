@@ -1,4 +1,4 @@
-package org.jboss.resteasy.grpc.server;
+package dev.resteasy.grpc.server;
 
 import java.security.AccessController;
 import java.security.PrivilegedExceptionAction;
