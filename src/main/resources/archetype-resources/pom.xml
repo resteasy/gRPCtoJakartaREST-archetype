@@ -8,7 +8,7 @@
     <name>${artifactId}</name>
 
     <description>GRPC to Jakarta REST</description>
-    <url>https://jakarta.rest.to.grpc</url>
+    <url>https://restful.to.grpc</url>
    
     <licenses>
         <license>
@@ -19,7 +19,7 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/resteasy/jakarta.rest.example.grpc</url>
+        <url>https://github.com/resteasy/restful.example.grpc</url>
     </scm>
     
     <developers>

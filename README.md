@@ -33,10 +33,10 @@ For example,
 
         mvn archetype:generate \
           -DarchetypeGroupId=org.jboss.resteasy -DarchetypeArtifactId=gRPCtoJakartaREST-archetype -DarchetypeVersion=0.0.3-SNAPSHOT \
-          -DgroupId=jakarta.rest.example -DartifactId=jakarta.rest.example -Dversion=0.0.2-SNAPSHOT \
-          -Dgenerate-prefix=CC1 -Dgenerate-package=jakarta.rest.example -Dresteasy-version=6.2.2.Final
+          -DgroupId=restful.example -DartifactId=restful.example -Dversion=0.0.2-SNAPSHOT \
+          -Dgenerate-prefix=CC1 -Dgenerate-package=restful.example -Dresteasy-version=6.2.2.Final
 
-See [https://github.com/resteasy/jakarta.rest.example](https://github.com/resteasy/jakarta.rest.example) 
+See [https://github.com/resteasy/restful.example](https://github.com/resteasy/restful.example) 
 for the sample code mentioned here.
 
 The result is a new gRPC bridge maven project named by its artifactId. Its initial contents are
@@ -59,16 +59,12 @@ Building the gRPC bridge project downloads the contents of the target
 project and builds all of the generated classes described in the
 [RESTEasy User Guide](https://resteasy.dev/docs/).
 
-The following parameter is required:
- 
- 1. servlet.name: the name of the servlet managing the generated WAR
-
 The following parameters are optional:
 
- 2. classes: necessary entity / response classes not detected by the heuristic in `org.jboss.resteasy.grpc.protobuf.JavaToProtobufGenerator`
+ 1. classes: necessary entity / response classes not detected by the heuristic in `org.jboss.resteasy.grpc.protobuf.JavaToProtobufGenerator`
     in grpc-bridge
     
- 3. "inWildfly": "true" if and only if the gRPC bridge willl run in a version of WildFly supplied with the grpc subsystem. Defaults to "true".
+ 2. "inWildfly": "true" if and only if the gRPC bridge willl run in a version of WildFly supplied with the grpc subsystem. Defaults to "true".
 
 The "classes" parameter has the syntax
 
@@ -76,8 +72,7 @@ The "classes" parameter has the syntax
  
 For example,
 
-     mvn -Dservlet.name=org.jboss.resteasy.example.ExampleApp \
-         -Dclasses=/home/bob/project/jakarta.rest.example.grpc/jakarta.rest.example/src/main/java:org.jboss.resteasy.example.CC7,/home/bob/project/jakarta.rest.example.grpc/jakarta.rest.example/src/main/java:org.jboss.resteasy.example.CC6 \
+     mvn -Dclasses=/home/bob/project/restful.example.grpc/restful.example/src/main/java:org.jboss.resteasy.example.CC7,/home/bob/project/restful.example.grpc/restful.example/src/main/java:org.jboss.resteasy.example.CC6 \
          clean install
         
 The gRPC bridge project will be populated as follows
@@ -122,6 +117,6 @@ to any resource method in the WAR. Once that happens, gRPC calls will succeed.
 For example, the @BeforeClass method in GrpcToJakartaRestTest includes the code
 
         Client client = ClientBuilder.newClient();
-        client.target("http://localhost:8080/GrpcToJakartaRESTTest/grpcToJakartaRest/grpcserver/context").request().get();
+        client.target("http ://localhost:8080/GrpcToJakartaRESTTest/grpcToJakartaRest/grpcserver/context").request().get();
 
 Alternatively, the call can be made from a browser or by cURL.
