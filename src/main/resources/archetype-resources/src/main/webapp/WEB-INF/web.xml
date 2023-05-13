@@ -6,7 +6,7 @@
     <servlet>
         <servlet-name>${generate-prefix}Servlet</servlet-name>
         <servlet-class>
-            org.jboss.resteasy.grpc.runtime.servlet.GrpcHttpServletDispatcher
+            dev.resteasy.grpc.bridge.runtime.servlet.GrpcHttpServletDispatcher
         </servlet-class>
     </servlet>
     

@@ -55,6 +55,7 @@
       <generate.package>${generate-package}</generate.package>
       <generate.prefix>${generate-prefix}</generate.prefix>
       <resteasy.version>${resteasy-version}</resteasy.version>
+      <grpc-bridge.version>${grpc-bridge-version}</grpc-bridge.version>
       <jars></jars>
       <classes></classes>
       <inWildFly>true</inWildFly>
@@ -114,15 +115,15 @@
          <scope>compile</scope>
       </dependency>
       <dependency>
-         <groupId>org.jboss.resteasy</groupId>
+         <groupId>dev.resteasy.grpc</groupId>
          <artifactId>grpc-bridge-runtime</artifactId>
-         <version>${resteasy.version}</version>
+         <version>${grpc-bridge.version}</version>
       </dependency>
       <dependency>
-         <groupId>org.jboss.resteasy</groupId>
+		 <groupId>dev.resteasy.grpc</groupId>
          <artifactId>grpc-bridge</artifactId>
-         <version>${resteasy.version}</version>
-      </dependency>
+         <version>${grpc-bridge.version}</version>
+	  </dependency>
       <dependency>
          <groupId>com.google.protobuf</groupId>
          <artifactId>protobuf-java</artifactId>
@@ -262,7 +263,7 @@
                      <goal>java</goal>
                   </goals>
                   <configuration>
-                     <mainClass>org.jboss.resteasy.grpc.protobuf.JavaToProtobufGenerator</mainClass>
+                     <mainClass>dev.resteasy.grpc.bridge.generator.protobuf.JavaToProtobufGenerator</mainClass>
                      <cleanupDaemonThreads>false</cleanupDaemonThreads>
                      <arguments>
                         <argument>${project.basedir}</argument>
@@ -293,7 +294,7 @@
                      <goal>java</goal>
                   </goals>
                   <configuration>
-                     <mainClass>org.jboss.resteasy.grpc.protobuf.JavabufTranslatorGenerator</mainClass>
+                     <mainClass>dev.resteasy.grpc.bridge.generator.protobuf.JavabufTranslatorGenerator</mainClass>
                      <cleanupDaemonThreads>false</cleanupDaemonThreads>
                      <arguments>
                         <argument>${project.basedir}/target/generated-sources/protobuf/grpc-java</argument>
@@ -318,7 +319,7 @@
                      <goal>java</goal>
                   </goals>
                   <configuration>
-                     <mainClass>org.jboss.resteasy.grpc.protobuf.ReaderWriterGenerator</mainClass>
+                     <mainClass>dev.resteasy.grpc.bridge.generator.protobuf.ReaderWriterGenerator</mainClass>
                      <cleanupDaemonThreads>false</cleanupDaemonThreads>
                      <arguments>
                         <argument>${project.basedir}/target/generated-sources/protobuf/grpc-java</argument>
@@ -340,7 +341,7 @@
                      <goal>java</goal>
                   </goals>
                   <configuration>
-                     <mainClass>org.jboss.resteasy.grpc.ServiceGrpcExtender</mainClass>
+                     <mainClass>dev.resteasy.grpc.bridge.generator.ServiceGrpcExtender</mainClass>
                      <cleanupDaemonThreads>false</cleanupDaemonThreads>
                      <arguments>
                         <argument>${generate-prefix}</argument>
@@ -477,7 +478,8 @@
                      </overlays>
                      <archive>
                         <manifestEntries>
-                           <Dependencies>org.wildfly.extension.grpc,org.jboss.resteasy.grpc-bridge-runtime</Dependencies>
+                           <!--Dependencies>org.wildfly.extension.grpc,dev.resteasy.grpc.grpc-bridge-runtime</Dependencies-->
+                           <Dependencies>org.wildfly.extension.grpc,io.grpc</Dependencies>
                         </manifestEntries>
                      </archive>
                      <webResources>
@@ -492,7 +494,7 @@
                         WEB-INF/test-classes/**/*,
                         META-INF/beans.xml,
                         META-INF/MANIFEST.MF,
-                        WEB-INF/lib/grpc-bridge-runtime-${resteasy.version}.jar
+                        WEB-INF/lib/grpc-bridge-runtime-${grpc-bridge-version}.jar
                      </packagingIncludes>
                      <packagingExcludes>
                         WEB-INF/lib/*grpc-bridge-${resteasy.version}.jar,

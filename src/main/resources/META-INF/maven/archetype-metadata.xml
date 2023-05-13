@@ -5,6 +5,7 @@
       <requiredProperty key="generate-prefix"/>
       <requiredProperty key="generate-package"/>
       <requiredProperty key="resteasy-version"/>
+      <requiredProperty key="grpc-bridge-version"/>
    </requiredProperties>
   
    <fileSets>
