@@ -48,7 +48,7 @@ For example,
 Note that "grpc-bridge-version" is the version of the RESTEasy project
 [grpc-bridge](https://github.com/resteasy/resteasy-grpc).
 
-See [https://github.com/resteasy/restful.example](https://github.com/resteasy/restful.example) 
+See [https://github.com/resteasy/resteasy-examples/grpc-bridge-example](https://github.com/resteasy/resteasy-examples/grpc-bridge-example) 
 for the sample code mentioned here.
 
 The result is a new gRPC bridge maven project named by its artifactId. Its initial contents are
@@ -61,7 +61,7 @@ The result is a new gRPC bridge maven project named by its artifactId. Its initi
 
  4. a *buildjar* shell script which can package all of the necessary files in a JAR file
  
- 5. a *deployjar* shell script which can deploy the JAR file
+ 5. a *deployjar* shell script which can deploy the JAR file [probably needs to be adjusted according to the environment]
  
 ### Building the gRPC bridge project
 
@@ -76,6 +76,9 @@ The following parameters are optional:
     
  2. *inWildfly*: "true" if and only if the gRPC bridge willl run in a version of WildFly supplied with the grpc subsystem. Defaults to "true".
 
+ 3. *release-type*: "snapshot" or "release", determines where the deployjar should deploy to, but that will probably
+    have to be tailored appropriately.
+    
 The "classes" parameter has the syntax
 
         (source-directory ':' fully-qualified-name) [',' source-directory ':' fully-qualified-name]*
@@ -83,11 +86,11 @@ The "classes" parameter has the syntax
 For example,
 
      export SRC=/home/rsigal/git.grpc.test/restful.example.grpc/restful.example/src/main/java
-     mvn -Dservlet.name=CCS1ervlet \
-        -Dextra.classes=${SRC}:jakarta.rest.example.CC7,${SRC}:jakarta.rest.example.CC6 \
-        -Drelease.type=release clean install
+     mvn -Dclasses=${SRC}:jakarta.rest.example.CC7,${SRC}:jakarta.rest.example.CC6 clean install
         
-The gRPC bridge project will be populated as follows
+This will run the [java protoc compiler](https://github.com/protocolbuffers/protobuf/tree/main/java), with
+the [grpc plugin](https://github.com/grpc/grpc-java/blob/master/compiler/README.md), and
+the generator classes in the grpc-bridge project, and the bridge project will be populated as follows
 
  1. the src directory will be copied from the target project
  
@@ -118,25 +121,20 @@ upon receiving an invocation on path "grpcserver/start".
         
 Once the gRPC server is started, the Jakarta RESTful Web Services resources in the gRPC bridge project (copied from the
 target project) can be invoked by an appropriate gRPC client. For some sample client code, see
-`org.jboss.resteasy.test.grpc.AbstractGrpcToJakartaRESTTest` in RESTEasy's grpc-bridge project.
+`org.jboss.resteasy.test.grpc.AbstractGrpcToJakartaRESTTest` in RESTEasy's grpc-bridge project or 
+`dev.resteasy.grpc.greet.test.GrpcToJakartaRESTTest` in the arch-test directory in this project.
 
 **Note.** `<generate-prefix>ServiceGrpcImpl` retrieves the `org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher`
 that handles the servlet. For this to work, there has to be a Jakarta RESTful Web Services call (as opposed to a gRPC call)
-to a resource method in the WAR. In particular, `startContext()` obtains and stores the `jakarta.servlet.ServletContext`
+to a resource method in the WAR. In particular, `<generate-prefix>_Server.startContext()`, with path
+"grpcserver/context", obtains and stores the `jakarta.servlet.ServletContext`
 for the servlet. Once that happens, gRPC calls will succeed.
 
-For example, `AbstractGrpcToJakartaRESTTest` includes the code
+For example, `GrpcToJakartaRESTTest` includes the code
 
-        static void accessServletContexts() {
-            try (
-                    Client client = ClientBuilder.newClient();
-                    var response = client.target("http ://localhost:8080/grpc-test/grpcserver/context")
-                            .request()
-                            .get()) {
-                final var message = response.getStatus() + ": " + response.readEntity(String.class);
-                Assert.assertEquals(message, response.getStatus(), 200);
-            }
-        }
+        Client client = ClientBuilder.newClient();
+        Response response = client.target("http: //localhost:8080/GrpcToJakartaRESTTest/grpcToJakartaRest/grpcserver/context").request().get();
+        Assert.assertEquals(200, response.getStatus());
 
 Alternatively, the call can be made from a browser or by cURL.
 

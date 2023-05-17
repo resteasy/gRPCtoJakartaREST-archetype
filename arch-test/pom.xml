@@ -7,7 +7,6 @@
         <groupId>dev.resteasy.grpc</groupId>
         <artifactId>resteasy-grpc-testsuite</artifactId>
         <version>1.0.0.Alpha1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <properties>
         <maven.compiler.parameters>true</maven.compiler.parameters>
@@ -28,10 +27,6 @@
         <wildfly.grpc.test.feature.pack.groupId>org.wildfly.extras.grpc</wildfly.grpc.test.feature.pack.groupId>
         <wildfly.grpc.test.feature.pack.artifactId>wildfly-grpc-feature-pack</wildfly.grpc.test.feature.pack.artifactId>
         <wildfly.grpc.test.feature.pack.version>0.1.0.Final</wildfly.grpc.test.feature.pack.version>
-
-        <!-- For compiling the test project -->
-        <root.class>CC1</root.class>
-        <servlet.name>GrpcServlet</servlet.name>
     </properties>
     <artifactId>grpc-tests</artifactId>
     <name>RESTEasy Main testsuite: gRPC tests</name>
