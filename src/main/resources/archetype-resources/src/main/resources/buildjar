@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ $# -ne 3 ]; then
+    echo "give"
+    echo "  groupId"
+    echo "  artifactId"
+    echo "  version"
+    exit 1
+fi
+
+GROUP_ID=$1
+ARTIFACT_ID=$2
+VERSION=$3
+
+JAR=`pwd`/target/${ARTIFACT_ID}-${VERSION}.jar
+
+echo Creating $JAR
+
+echo Adding target/classes
+cd target/classes; find . |xargs jar cvf $JAR; cd ../..
+
+echo Adding target/test-classes
+cd target/test-classes; find . | xargs jar uvf $JAR; cd ../..
+
+mvn install:install-file -Dfile=${JAR} -DgroupId=${GROUP_ID} -DartifactId=${ARTIFACT_ID} -Dpackaging=jar -Dversion=${VERSION}
