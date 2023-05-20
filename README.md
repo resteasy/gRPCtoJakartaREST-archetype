@@ -36,14 +36,14 @@ For example,
         mvn archetype:generate -B \
            -DarchetypeGroupId=dev.resteasy.grpc \
            -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
-           -DarchetypeVersion=0.0.8-SNAPSHOT \
+           -DarchetypeVersion=1.0.0.Alpha1 \
            -DgroupId=dev.resteasy.examples \
            -DartifactId=grpcToRest.example \
-           -Dversion=6.0.0-SNAPSHOT \
+           -Dversion=1.0.0.Final \
            -Dgenerate-prefix=Greet \
            -Dgenerate-package=dev.resteasy.example.grpc.greet \
-           -Dresteasy-version=6.3.0.Alpha1-SNAPSHOT \
-           -Dgrpc-bridge-version=1.0.0.Alpha1-SNAPSHOT
+           -Dresteasy-version=6.2.4.Final \
+           -Dgrpc-bridge-version=1.0.0.Alpha1
            
 Note that "grpc-bridge-version" is the version of the RESTEasy project
 [grpc-bridge](https://github.com/resteasy/resteasy-grpc).
@@ -157,14 +157,14 @@ gRPCtoJakartaREST-archetype has a built in testing procedure based on the arch-s
         mvn archetype:generate -B \
            -DarchetypeGroupId=dev.resteasy.grpc \
            -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
-           -DarchetypeVersion=0.0.8-SNAPSHOT \
+           -DarchetypeVersion=1.0.0.Alpha1 \
            -DgroupId=dev.resteasy.examples \
            -DartifactId=grpcToRest.example \
-           -Dversion=6.0.0-SNAPSHOT \
+           -Dversion=1.0.0.Final \
            -Dgenerate-prefix=Greet \
            -Dgenerate-package=dev.resteasy.example.grpc.greet \
-           -Dresteasy-version=6.3.0.Alpha1-SNAPSHOT \
-           -Dgrpc-bridge-version=1.0.0.Alpha1-SNAPSHOT
+           -Dresteasy-version=6.2.4.Final \
+           -Dgrpc-bridge-version=1.0.0.Alpha1
 
         # Build bridge project
         cd grpcToRest.example
