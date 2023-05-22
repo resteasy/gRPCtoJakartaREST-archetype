@@ -4,6 +4,14 @@
 	<artifactId>gRPCtoJakartaREST-archetype</artifactId>
 	<version>1.0.0.Alpha1</version>
 	<packaging>maven-archetype</packaging>
+	
+    <parent>
+        <groupId>dev.resteasy.tools</groupId>
+        <artifactId>resteasy-parent</artifactId>
+        <version>2.0.3.Final</version>
+        <relativePath/>
+    </parent>
+
 	<properties>
 		<archetype-packaging.version>3.2.1</archetype-packaging.version>
 		<exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
