@@ -39,7 +39,7 @@ For example,
            -DarchetypeVersion=1.0.0.Alpha1 \
            -DgroupId=dev.resteasy.examples \
            -DartifactId=grpcToRest.example \
-           -Dversion=1.0.0.Final \
+           -Dversion=1.0.0.Final-SNAPSHOT \
            -Dgenerate-prefix=Greet \
            -Dgenerate-package=dev.resteasy.example.grpc.greet \
            -Dresteasy-version=6.2.4.Final \
@@ -160,7 +160,7 @@ gRPCtoJakartaREST-archetype has a built in testing procedure based on the arch-s
            -DarchetypeVersion=1.0.0.Alpha1 \
            -DgroupId=dev.resteasy.examples \
            -DartifactId=grpcToRest.example \
-           -Dversion=1.0.0.Final \
+           -Dversion=1.0.0.Final-SNAPSHOT \
            -Dgenerate-prefix=Greet \
            -Dgenerate-package=dev.resteasy.example.grpc.greet \
            -Dresteasy-version=6.2.4.Final \
