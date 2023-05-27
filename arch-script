@@ -13,7 +13,7 @@ rm -rf *
 mvn archetype:generate -B \
    -DarchetypeGroupId=dev.resteasy.grpc \
    -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
-   -DarchetypeVersion=1.0.0.Alpha2 \
+   -DarchetypeVersion=1.0.0.Alpha4 \
    -DgroupId=dev.resteasy.examples \
    -DartifactId=grpcToRest.example \
    -Dversion=1.0.0.Final-SNAPSHOT \
