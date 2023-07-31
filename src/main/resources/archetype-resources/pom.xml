@@ -482,7 +482,8 @@
                         WEB-INF/test-classes/**/*,
                         META-INF/beans.xml,
                         META-INF/MANIFEST.MF,
-                        WEB-INF/lib/grpc-bridge-runtime-${grpc-bridge-version}.jar
+                        WEB-INF/lib/grpc-bridge-runtime-${grpc-bridge-version}.jar,
+                        WEB-INF/lib/grpc-services-${grpc-bridge-version}.jar
                      </packagingIncludes>
                             <packagingExcludes>
                         WEB-INF/lib/*grpc-bridge-${resteasy.version}.jar,
