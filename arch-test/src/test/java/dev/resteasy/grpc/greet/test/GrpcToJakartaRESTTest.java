@@ -37,7 +37,7 @@ public class GrpcToJakartaRESTTest {
     static Archive<?> deploy() throws Exception {
         WebArchive war = TestUtil.prepareArchive(GrpcToJakartaRESTTest.class.getSimpleName());
         war.merge(ShrinkWrap.createFromZipFile(WebArchive.class,
-                TestUtil.resolveDependency("dev.resteasy.examples:grpcToRest.example.grpc:war:6.0.0-SNAPSHOT")));
+                TestUtil.resolveDependency("dev.resteasy.examples:grpcToRest.example.grpc:war:1.0.0.Final-SNAPSHOT")));
         WebArchive archive = (WebArchive) TestUtil.finishContainerPrepare(war, null, (Class<?>[]) null);
         // log.info(archive.toString(true));
         // archive.as(ZipExporter.class).exportTo(new File("/tmp/GrpcToJaxrs.jar"), true);
