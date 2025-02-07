@@ -46,33 +46,4 @@ public class CollectionResource {
     public HashSet<Integer> hashsetInteger(HashSet<Integer> set) {
         return set;
     }
-
-    //    @POST
-    //    @Path("interface/entity")
-    //    public String intfEntity(Intf intf) {
-    //        return intf.getS();
-    //    }
-    //
-    //    @POST
-    //    @Path("interface/impl")
-    //    public void intfImpl(IntfImpl implIntf) {
-    //        // not used: includes IntfImpl in .proto file
-    //    }
-    //
-    //    @Path("servletParams")
-    //    @POST
-    //    public String servletParams(@QueryParam("p1") String q1, @QueryParam("p2") String q2,
-    //            @FormParam("p2") String f2, @FormParam("p3") String f3,
-    //            @Context HttpServletRequest request) {
-    //        StringBuilder sb = new StringBuilder(q1 + "|" + q2 + "|" + f2 + "|" + f3 + "|");
-    //        for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-    //            sb.append(entry.getKey() + "->");
-    //            for (int i = 0; i < entry.getValue().length; i++) {
-    //                sb.append(entry.getValue()[i]);
-    //            }
-    //            sb.append("|");
-    //        }
-    //        System.out.println("PARAMS: " + sb.toString());
-    //        return sb.toString();
-    //    }
 }

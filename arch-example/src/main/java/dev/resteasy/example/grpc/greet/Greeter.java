@@ -33,7 +33,6 @@ public class Greeter {
     @Path("greet/{s}")
     @Produces(MediaType.APPLICATION_JSON)
     public Greeting greet(@PathParam("s") String s) {
-        System.out.println("GREET: " + s);
         return new Greeting("hello, " + s);
     }
 
@@ -41,7 +40,6 @@ public class Greeter {
     @Path("salute/{s}")
     @Produces(MediaType.APPLICATION_JSON)
     public GeneralGreeting generalGreet(@QueryParam("salute") String salute, @PathParam("s") String s) {
-        System.out.println("GENERAL_GREET: " + salute + ": " + s);
         return getGeneralGreeting(salute, s);
     }
 
