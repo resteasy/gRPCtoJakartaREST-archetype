@@ -2,7 +2,8 @@
 
 The [RESTEasy grpc-bridge facility](https://github.com/resteasy/resteasy-grpc)
 supports exposing Jakarta RESTful Web Services resources to gRPC clients. See the 
-[RESTEasy User Guide](https://resteasy.dev/docs/) for a more detailed
+[RESTEasy User Guide](https://resteasy.dev/docs/) and the 
+[gRPC Bridge Project User Guide](https://resteasy.dev/docs/) for a more detailed
 discussion of the various mechanisms and classes involved.
 
 There are a number of pieces to create, and this maven archetype includes a pom.xml which 
@@ -42,13 +43,13 @@ For example,
            -Dversion=1.0.0.Final-SNAPSHOT \
            -Dgenerate-prefix=Greet \
            -Dgenerate-package=dev.resteasy.example.grpc.greet \
-           -Dresteasy-version=6.2.4.Final \
+           -Dresteasy-version=6.2.11.Final \
            -Dgrpc-bridge-version=1.0.0.Alpha2
            
 Note that "grpc-bridge-version" is the version of the RESTEasy project
 [grpc-bridge](https://github.com/resteasy/resteasy-grpc).
 
-See [https://github.com/resteasy/resteasy-examples/grpc-bridge-example](https://github.com/resteasy/resteasy-examples/grpc-bridge-example) 
+See the [grpc-bridge-example](https://github.com/resteasy/resteasy-examples/tree/main/grpc-bridge-example) 
 for the sample code mentioned here.
 
 The result is a new gRPC bridge maven project named by its artifactId. Its initial contents are
@@ -67,7 +68,7 @@ The result is a new gRPC bridge maven project named by its artifactId. Its initi
 
 Building the gRPC bridge project downloads the contents of the target 
 project and builds all of the generated classes described in the
-[RESTEasy User Guide](https://resteasy.dev/docs/).
+[gRPC Bridge Project Introduction]](https://resteasy.dev/docs/).
 
 The following parameters are optional:
 
@@ -117,7 +118,8 @@ The principal output is a WAR in the target directory which can be deployed to W
 
 If "inWildfly" is set to "false" or the WAR is deployed to some environment other than WildFly with the grpc subsystem, the
 class `<generate-prefix>_Server` is a Jakarta RESTful Web Services resource that can be used to start up a gRPC server 
-upon receiving an invocation on path "grpcserver/start".
+upon receiving an invocation on path "grpcserver/start". Otherwise, dropping the generated WAR in the WildFly
+deployment directory will cause the gRPC server to start up.
         
 Once the gRPC server is started, the Jakarta RESTful Web Services resources in the gRPC bridge project (copied from the
 target project) can be invoked by an appropriate gRPC client. For some sample client code, see
@@ -140,40 +142,58 @@ Alternatively, the call can be made from a browser or by cURL.
 
 ## Testing the archetype
 
-gRPCtoJakartaREST-archetype has a built in testing procedure based on the arch-script bash script:
+gRPCtoJakartaREST-archetype has a built in testing procedure based on the bash script arch-script:
 
-        #!/bin/bash
+````
+    #!/bin/bash
 
-        DIR=arch-build
+    DIR=arch-build
 
-        if [ ! -d "$DIR" ]; then
-           mkdir $DIR
-        fi
+    echo CLEANING
+    cd arch-example
+    mvn clean
+    cd ../arch-test
+    mvn clean
+    cd ..
+    mvn clean
 
-        cd $DIR
-        rm -rf *
+    echo BUILDING arch-example
+    cd arch-example
+    mvn install
+    cd ..
 
-        # Create grpcToRest.example skeleton bridge project
-        mvn archetype:generate -B \
-           -DarchetypeGroupId=dev.resteasy.grpc \
-           -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
-           -DarchetypeVersion=1.0.0.Alpha5 \
-           -DgroupId=dev.resteasy.examples \
-           -DartifactId=grpcToRest.example \
-           -Dversion=1.0.0.Final-SNAPSHOT \
-           -Dgenerate-prefix=Greet \
-           -Dgenerate-package=dev.resteasy.example.grpc.greet \
-           -Dresteasy-version=6.2.4.Final \
-           -Dgrpc-bridge-version=1.0.0.Alpha2
+    if [ ! -d "$DIR" ]; then
+       mkdir $DIR
+    fi
 
-        # Build bridge project
-        cd grpcToRest.example
-        mvn install
+    cd $DIR
+    rm -rf *
+    
+    echo CREATING grpcToRest.example.grpc
+    # Create grpcToRest.example skeleton bridge project
+    mvn archetype:generate -B \
+       -DarchetypeGroupId=dev.resteasy.grpc \
+       -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
+       -DarchetypeVersion=1.0.0.Alpha7-SNAPSHOT \
+       -DgroupId=dev.resteasy.examples \
+       -DartifactId=grpcToRest.example \
+       -Dversion=1.0.0.Alpha7-SNAPSHOT \
+       -Dgenerate-prefix=Greet \
+       -Dgenerate-package=dev.resteasy.example.grpc.greet \
+       -Dresteasy-version=6.2.11.Final \
+       -Dgrpc-bridge-version=1.0.0.Alpha6-SNAPSHOT
 
-        # Run dev.resteasy.grpc.greet.test.GrpcToJakartaRESTTest, which deploys the bridge project WAR
-        # to WildFly and makes gRPC invocations on it.
-        cd ../../arch-test
-        mvn clean install
+    # Build bridge project
+    echo BUILDING grpcToRest.example
+    cd grpcToRest.example
+    mvn install
+
+    echo TESTING
+    # Run dev.resteasy.grpc.greet.test.GrpcToJakartaRESTTest, which deploys the bridge project WAR
+    # to WildFly and makes gRPC invocations on it.
+    cd ../../arch-test
+    mvn clean install
+````
 
 Running
 
