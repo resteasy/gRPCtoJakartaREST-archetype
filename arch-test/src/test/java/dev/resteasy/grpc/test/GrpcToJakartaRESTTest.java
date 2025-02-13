@@ -58,7 +58,7 @@ public class GrpcToJakartaRESTTest {
     @Deployment
     static Archive<?> deploy() throws Exception {
         WebArchive war = TestUtil.prepareArchive(GrpcToJakartaRESTTest.class.getSimpleName());
-        String version = System.getProperty("grpc.example.version", "1.0.0.Alpha7-SNAPSHOT");
+        String version = System.getProperty("grpc.example.version", "1.0.0.Alpha7");
         System.out.println("VERSION: " + version);//expected format is <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
         System.out
                 .println(TestUtil.resolveDependency("dev.resteasy.examples:grpcToRest.example.grpc:war:" + version).toString());

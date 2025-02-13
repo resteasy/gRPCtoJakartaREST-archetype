@@ -40,11 +40,11 @@ For example,
            -DarchetypeVersion=1.0.0.Alpha5 \
            -DgroupId=dev.resteasy.examples \
            -DartifactId=grpcToRest.example \
-           -Dversion=1.0.0.Final-SNAPSHOT \
+           -Dversion=1.0.0.Alpha7 \
            -Dgenerate-prefix=Greet \
            -Dgenerate-package=dev.resteasy.example.grpc.greet \
            -Dresteasy-version=6.2.11.Final \
-           -Dgrpc-bridge-version=1.0.0.Alpha2
+           -Dgrpc-bridge-version=1.0.0.Alpha6
            
 Note that "grpc-bridge-version" is the version of the RESTEasy project
 [grpc-bridge](https://github.com/resteasy/resteasy-grpc).
@@ -174,14 +174,14 @@ gRPCtoJakartaREST-archetype has a built in testing procedure based on the bash s
     mvn archetype:generate -B \
        -DarchetypeGroupId=dev.resteasy.grpc \
        -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
-       -DarchetypeVersion=1.0.0.Alpha7-SNAPSHOT \
+       -DarchetypeVersion=1.0.0.Alpha7 \
        -DgroupId=dev.resteasy.examples \
        -DartifactId=grpcToRest.example \
-       -Dversion=1.0.0.Alpha7-SNAPSHOT \
+       -Dversion=1.0.0.Alpha7 \
        -Dgenerate-prefix=Greet \
        -Dgenerate-package=dev.resteasy.example.grpc.greet \
        -Dresteasy-version=6.2.11.Final \
-       -Dgrpc-bridge-version=1.0.0.Alpha6-SNAPSHOT
+       -Dgrpc-bridge-version=1.0.0.Alpha6
 
     # Build bridge project
     echo BUILDING grpcToRest.example
