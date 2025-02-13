@@ -62,9 +62,10 @@
         <jakarta.enterprise.cdi-api.version>4.0.1</jakarta.enterprise.cdi-api.version>
         <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
         <jakarta.ws.rs-api.version>3.1.0</jakarta.ws.rs-api.version>
-        <com.google.protobuf.version>3.25.3</com.google.protobuf.version>
-        <protoc.version>3.21.11</protoc.version>
+        <com.google.protobuf.version>4.27.3</com.google.protobuf.version>
+        <protoc.version>4.27.3</protoc.version>
         <protoc-gen-grpc-java.version>1.70.0</protoc-gen-grpc-java.version>
+        <failureaccess.version>1.0.2</failureaccess.version>
         
         <!-- plugins -->
         <build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
@@ -151,6 +152,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>failureaccess</artifactId>
+            <version>${failureaccess.version}</version>
         </dependency>
         <!-- maven plugins -->
         <dependency>
@@ -312,7 +318,7 @@
                             <cleanupDaemonThreads>false</cleanupDaemonThreads>
                             <arguments>
                                 <argument>${project.basedir}/target/generated-sources/protobuf/grpc-java</argument>
-                                <argument>${generate.package}.${generate-prefix}_proto</argument>
+                                <argument>${generate.package}.${generate-prefix}</argument>
                                 <argument>${generate-prefix}</argument>
                                 <argument>${project.basedir}</argument>
                                 <argument>${project.basedir}/src/main/proto/${generate-prefix}.proto</argument>
@@ -466,7 +472,7 @@
                             <archive>
                                 <manifestEntries>
                                     <!--Dependencies>org.wildfly.extension.grpc,dev.resteasy.grpc.grpc-bridge-runtime</Dependencies-->
-                                    <Dependencies>org.wildfly.extension.grpc,io.grpc</Dependencies>
+                                    <Dependencies>org.wildfly.extension.grpc,io.grpc-all</Dependencies>
                                 </manifestEntries>
                             </archive>
                             <webResources>
