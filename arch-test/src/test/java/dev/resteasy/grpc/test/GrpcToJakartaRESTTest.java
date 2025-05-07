@@ -2,7 +2,10 @@ package dev.resteasy.grpc.test;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -31,6 +34,8 @@ import dev.resteasy.example.grpc.greet.Greet_proto.GeneralEntityMessage;
 import dev.resteasy.example.grpc.greet.Greet_proto.GeneralReturnMessage;
 import dev.resteasy.example.grpc.greet.Greet_proto.dev_resteasy_example_grpc_greet___GeneralGreeting;
 import dev.resteasy.example.grpc.greet.Greet_proto.dev_resteasy_example_grpc_greet___Greeting;
+import dev.resteasy.grpc.arrays.Array_proto.*;
+import dev.resteasy.grpc.arrays.Array_proto.dev_resteasy_grpc_arrays___Integer___Array;
 import dev.resteasy.grpc.bridge.runtime.Utility;
 import dev.resteasy.grpc.bridge.runtime.protobuf.JavabufTranslator;
 import io.grpc.ManagedChannel;
@@ -59,9 +64,6 @@ public class GrpcToJakartaRESTTest {
     static Archive<?> deploy() throws Exception {
         WebArchive war = TestUtil.prepareArchive(GrpcToJakartaRESTTest.class.getSimpleName());
         String version = System.getProperty("grpc.example.version", "1.0.0.Alpha8-SNAPSHOT");
-        System.out.println("VERSION: " + version);//expected format is <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
-        System.out
-                .println(TestUtil.resolveDependency("dev.resteasy.examples:grpcToRest.example.grpc:war:" + version).toString());
         war.merge(ShrinkWrap.createFromZipFile(WebArchive.class,
                 TestUtil.resolveDependency("dev.resteasy.examples:grpcToRest.example.grpc:war:" + version)));
         WebArchive archive = (WebArchive) TestUtil.finishContainerPrepare(war, null, (Class<?>[]) null);
@@ -143,8 +145,36 @@ public class GrpcToJakartaRESTTest {
         GeneralReturnMessage response = blockingStub.hashsetInteger(gem);
         Message result = response.getJavaUtilHashSet0Field();
         Object o = translator.translateFromJavabuf(result);
-        System.out.println("O: " + o);
         Assert.assertTrue(CollectionEquals.equals(set, o));
+    }
+
+    @Test
+    public void testArrayOne() throws Exception {
+        int[] array = new int[] { (int) 3, (int) 5 };
+        dev_resteasy_grpc_arrays___Integer___Array jbArray = (dev_resteasy_grpc_arrays___Integer___Array) translator
+                .translateToJavabuf(array);
+        GeneralEntityMessage.Builder builder = GeneralEntityMessage.newBuilder();
+        GeneralEntityMessage gem = builder.setDevResteasyGrpcArraysIntegerArrayField(jbArray).build();
+        GeneralReturnMessage response = blockingStub.arrayOne(gem);
+        dev_resteasy_grpc_arrays___Integer___Array result = response.getDevResteasyGrpcArraysIntegerArrayField();
+        int[] array2 = (int[]) translator.translateFromJavabuf(result);
+        Assert.assertTrue(Arrays.equals(array, array2));
+    }
+
+    @Test
+    public void testMapWildcardWildcard() throws Exception {
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        map.put(Integer.valueOf(17), Integer.valueOf(19));
+        GenericType<Map<Object, Object>> type = new GenericType<Map<Object, Object>>() {
+        };
+        Message m = translator.translateToJavabuf(map, type);
+        Any any = Any.pack(m);
+        GeneralEntityMessage.Builder builder = GeneralEntityMessage.newBuilder();
+        GeneralEntityMessage gem = builder.setAnyField(any).build();
+        GeneralReturnMessage response = blockingStub.mapWildWild(gem);
+        any = response.getAnyField();
+        Message result = Utility.unpack(any, translator);
+        Assert.assertEquals(map, translator.translateFromJavabuf(result));
     }
 
     //////////////////////////////////////////////////////////

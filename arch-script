@@ -34,16 +34,18 @@ mvn archetype:generate -B \
    -Dgenerate-prefix=Greet \
    -Dgenerate-package=dev.resteasy.example.grpc.greet \
    -Dresteasy-version=6.2.11.Final \
-   -Dgrpc-bridge-version=1.0.0.Alpha6
+   -Dgrpc-bridge-version=1.0.0.Alpha7-SNAPSHOT
 
 # Add resource class for array test
 #echo Copying ArrayResource.java
 #cp -r ../arch-test/src/main/java/ ../arch-build/grpcToRest.example/src/main/java
 
 # Build bridge project
+echo BUILDING grpcToRest.example
 cd grpcToRest.example
 mvn install
 
+echo TESTING
 # Run dev.resteasy.grpc.greet.test.GrpcToJakartaRESTTest, which deploys the bridge project WAR
 # to WildFly and makes gRPC invocations on it.
 cd ../../arch-test

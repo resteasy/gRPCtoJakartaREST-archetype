@@ -28,9 +28,9 @@
 
     <properties>
         <version.jakarta.ee>10.0.0</version.jakarta.ee>
-        <version.org.jboss.resteasy>6.2.3.Final</version.org.jboss.resteasy>
+        <version.org.jboss.resteasy>6.2.11.Final</version.org.jboss.resteasy>
         <version.junit>4.13.2</version.junit>
-        <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
+        <exec-maven-plugin.version>3.3.0</exec-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -53,7 +53,7 @@
         <dependency>
         	<groupId>dev.resteasy.grpc</groupId>
         	<artifactId>grpc-tests</artifactId>
-        	<version>1.0.0.Alpha6</version>
+        	<version>1.0.0.Alpha7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>jakarta.servlet</groupId>
