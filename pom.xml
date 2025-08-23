@@ -1,8 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>dev.resteasy.grpc</groupId>
     <artifactId>gRPCtoJakartaREST-archetype</artifactId>
-    <version>1.0.0.Alpha8-SNAPSHOT</version>
+    <version>1.0.0.Alpha8</version>
     <packaging>maven-archetype</packaging>
     
     <parent>
@@ -12,11 +15,47 @@
         <relativePath/>
     </parent>
 
+    <name>gRPCtoJakartaREST-archetype</name>    
+    <description>Archetype for creating a gRPC to Jakarta REST bridge project</description>
+    <url>https://resteasy.dev</url>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>https://repository.jboss.org/licenses/apache-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:resteasy/gRPCtoJakartaREST-archetype.git</connection>
+        <developerConnection>scm:git:git@github.com:resteasy/gRPCtoJakartaREST-archetype.git</developerConnection>
+        <url>https://github.com/resteasy/gRPCtoJakartaREST-archetype/</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>ronsigal</id>
+            <name>Ron Sigal</name>
+            <email>rsigal@redhat.com</email>
+            <organization>JBoss by Red Hat</organization>
+            <url>https://resteasy.dev</url>
+            <roles>
+                <role>project-owner</role>
+            </roles>
+            <timezone>-5</timezone>
+        </developer>
+    </developers>
+
     <properties>
+        <nexus.repository.release>resteasy</nexus.repository.release>
+        <nexus.repository.staging>resteasy-staging</nexus.repository.staging>
+        <nexus.staging.tag>gRPCtoJakartaREST-archetype-${project.version}</nexus.staging.tag>
+        
         <archetype-packaging.version>3.2.1</archetype-packaging.version>
         <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     </properties>
+
     <build>
         <extensions>
             <extension>
@@ -42,15 +81,13 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <release>11</release>
+                    <release>17</release>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>${exec-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>build</id>

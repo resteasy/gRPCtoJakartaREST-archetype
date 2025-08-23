@@ -3,33 +3,71 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>dev.resteasy.grpc</groupId>
         <artifactId>resteasy-grpc-test-bom</artifactId>
-        <version>1.0.0.Alpha6</version>
+        <version>1.0.0.Alpha7</version>
         <relativePath />
     </parent>
+    
+    <artifactId>grpc-tests</artifactId>
+    <version>1.0.0.Alpha8</version>
+
+    <name>grpc-tests</name>
+    <description>RESTEasy Main testsuite: gRPC tests</description>
+    <url>https://resteasy.dev</url>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>https://repository.jboss.org/licenses/apache-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:resteasy/gRPCtoJakartaREST-archetype.git</connection>
+        <developerConnection>scm:git:git@github.com:resteasy/gRPCtoJakartaREST-archetype.git</developerConnection>
+        <url>https://github.com/resteasy/gRPCtoJakartaREST-archetype/tree/main/arch-test</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>ronsigal</id>
+            <name>Ron Sigal</name>
+            <email>rsigal@redhat.com</email>
+            <organization>JBoss by Red Hat</organization>
+            <url>https://resteasy.dev</url>
+            <roles>
+                <role>project-owner</role>
+            </roles>
+            <timezone>-5</timezone>
+        </developer>
+    </developers>
+
     <properties>
-        <maven.compiler.parameters>true</maven.compiler.parameters>
-        <module.jar.path>${jboss.home}${file.separator}modules${file.separator}system${file.separator}layers${file.separator}base</module.jar.path>
+    
+        <!-- release properties -->
+        <nexus.repository.release>resteasy</nexus.repository.release>
+        <nexus.repository.staging>resteasy-staging</nexus.repository.staging>
+        <nexus.staging.tag>gRPCtoJakartaREST-archetype-${project.version}</nexus.staging.tag>
+        
         <!-- Provisioning properties -->
         <jboss.home>${project.build.directory}${file.separator}wildfly</jboss.home>
 
         <!-- Server properties -->
         <server.test.feature.pack.groupId>org.wildfly</server.test.feature.pack.groupId>
         <server.test.feature.pack.artifactId>wildfly-ee-galleon-pack</server.test.feature.pack.artifactId>
-        <server.test.feature.pack.version>35.0.1.Final</server.test.feature.pack.version>
+        <server.test.feature.pack.version>37.0.0.Final</server.test.feature.pack.version>
 
-        <!-- For grpc-bridge test -->
+        <!-- grpc feature pack -->
         <wildfly.grpc.test.feature.pack.groupId>org.wildfly.extras.grpc</wildfly.grpc.test.feature.pack.groupId>
         <wildfly.grpc.test.feature.pack.artifactId>wildfly-grpc-feature-pack</wildfly.grpc.test.feature.pack.artifactId>
-        <wildfly.grpc.test.feature.pack.version>0.1.11.Final</wildfly.grpc.test.feature.pack.version>
-        <grpc.example.version>1.0.0.Alpha8-SNAPSHOT</grpc.example.version>
+        <wildfly.grpc.test.feature.pack.version>0.1.12.Final</wildfly.grpc.test.feature.pack.version>
         
-        <!-- other versions -->
-        <javax.annotation.version>1.3.2</javax.annotation.version>
-        <wildfly.maven.plugin.version>5.1.2.Final</wildfly.maven.plugin.version>
-        <protoc-gen-grpc-java.version>1.70.0</protoc-gen-grpc-java.version>
+        <grpc.example.version>${project.version}</grpc.example.version>
+        <grpc-bridge.version>1.0.0.Alpha7</grpc-bridge.version>        
         <resteasy.version>6.2.11.Final</resteasy.version>
         
         <version.org.jboss.arquillian>1.9.3.Final</version.org.jboss.arquillian>
@@ -37,8 +75,7 @@
         <version.org.jboss.shrinkwrap.resolver>3.3.3</version.org.jboss.shrinkwrap.resolver>
         <version.org.wildfly.arquillian>5.1.0.Beta9</version.org.wildfly.arquillian>
     </properties>
-    <artifactId>grpc-tests</artifactId>
-    <name>RESTEasy Main testsuite: gRPC tests</name>
+
     <profiles>
         <!--
         Name:  download
@@ -59,7 +96,6 @@
                     <plugin>
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-maven-plugin</artifactId>
-                        <version>${wildfly.maven.plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>server-provisioning</id>
@@ -98,95 +134,25 @@
             </properties>
         </profile>
     </profiles>
+
     <dependencies>
-        <!-- This is only required because a generator adds the @javax.annotation.Generated on generated source which
-             no longer exists in Java 9+. It was migrated to javax.annotation.processing.Generated.
-          -->
-        <dependency>
-			<groupId>dev.resteasy.examples</groupId>
-			<artifactId>grpcToRest.example.grpc</artifactId>
-			<version>${grpc.example.version}</version>
-			<type>war</type>
-		</dependency>
-        <dependency>
-			<groupId>dev.resteasy.examples</groupId>
-			<artifactId>grpcToRest.example.grpc</artifactId>
-			<version>${grpc.example.version}</version>
-			<type>jar</type>
-		</dependency>
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>${javax.annotation.version}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.enterprise</groupId>
-            <artifactId>jakarta.enterprise.cdi-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.ws.rs</groupId>
-            <artifactId>jakarta.ws.rs-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-        </dependency>
         <dependency>
             <groupId>dev.resteasy.grpc</groupId>
-            <artifactId>grpc-bridge</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>dev.resteasy.grpc</groupId>
-            <artifactId>grpc-bridge-runtime</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>protoc-gen-grpc-java</artifactId>
+            <artifactId>resteasy-grpc-test-bom</artifactId>
+            <version>${grpc-bridge.version}</version>
+            <scope>test</scope>
             <type>pom</type>
         </dependency>
         <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-protobuf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-stub</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-        </dependency>
-
-        <!-- Test Dependencies -->
+			<groupId>dev.resteasy.examples</groupId>
+			<artifactId>grpcToRest.example.grpc</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+			<type>jar</type>
+		</dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty-shaded</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-client</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-client-utils</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-json-p-provider</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-json-binding-provider</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -205,45 +171,21 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>failureaccess</artifactId>
-        </dependency>
-            <!-- This is required first to override the dependencies in the Arquillian BOM -->
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.resolver</groupId>
-                <artifactId>shrinkwrap-resolver-bom</artifactId>
-                <version>${version.org.jboss.shrinkwrap.resolver}</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian.jakarta</groupId>
-                <artifactId>arquillian-jakarta-bom</artifactId>
-                <version>${version.org.jboss.arquillian.jakarta}</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.wildfly.arquillian</groupId>
-                <artifactId>wildfly-arquillian-bom</artifactId>
-                <version>${version.org.wildfly.arquillian}</version>
-                <type>pom</type>
-            </dependency>
         <dependency>
             <groupId>org.wildfly.arquillian</groupId>
             <artifactId>wildfly-arquillian-container-managed</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <extensions>
             <extension>
                 <groupId>kr.motd.maven</groupId>
                 <artifactId>os-maven-plugin</artifactId>
-                <version>1.7.0</version>
+                <version>${version.os-maven-plugin}</version>
             </extension>
         </extensions>
-
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>
@@ -251,12 +193,6 @@
                 <includes>
                     <include>arquillian.xml</include>
                 </includes>
-            </testResource>
-            <testResource>
-                <directory>src/test/resources</directory>
-                <excludes>
-                    <exclude>arquillian.xml</exclude>
-                </excludes>
             </testResource>
         </testResources>
         <plugins>
