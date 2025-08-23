@@ -11,7 +11,7 @@
 
     <groupId>dev.resteasy.examples</groupId>
     <artifactId>grpcToRest.example</artifactId>
-    <version>1.0.0.Alpha8-SNAPSHOT</version>
+    <version>1.0.0.Alpha8</version>
     <packaging>war</packaging>
 
     <name>grpcToRest.example</name>
