@@ -1,9 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>dev.resteasy.tools</groupId>
         <artifactId>resteasy-parent</artifactId>
-        <version>2.0.3.Final</version>
+        <version>2.0.5.Final</version>
         <relativePath/>
     </parent>
 
@@ -11,8 +13,11 @@
     <artifactId>grpcToRest.example</artifactId>
     <version>1.0.0.Alpha8-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>gRPC to Jakarta REST example</name>
+
+    <name>grpcToRest.example</name>
     <description>Shows how to build a gRPC to Jakarta REST bridge example</description>
+    <url>https://resteasy.dev</url>
+    
     <licenses>
         <license>
             <name>Apache License 2.0</name>
@@ -20,17 +25,35 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
     <scm>
-        <connection>scm:git:git://github.com/resteasy/resteasy-examples.git</connection>
-        <developerConnection>scm:git:git@github.com:resteasy/resteasy-examples.git</developerConnection>
-        <url>https://github.com/resteasy/resteasy-examples/tree/main/</url>
+        <connection>scm:git:git@github.com:resteasy/gRPCtoJakartaREST-archetype.git</connection>
+        <developerConnection>scm:git:git@github.com:resteasy/gRPCtoJakartaREST-archetype.git</developerConnection>
+        <url>https://github.com/resteasy/gRPCtoJakartaREST-archetype/tree/main/arch-example</url>
     </scm>
 
+    <developers>
+        <developer>
+            <id>ronsigal</id>
+            <name>Ron Sigal</name>
+            <email>rsigal@redhat.com</email>
+            <organization>JBoss by Red Hat</organization>
+            <url>https://resteasy.dev</url>
+            <roles>
+                <role>project-owner</role>
+            </roles>
+            <timezone>-5</timezone>
+        </developer>
+    </developers>
+    
     <properties>
+        <!-- release properties -->
+        <nexus.repository.release>resteasy</nexus.repository.release>
+        <nexus.repository.staging>resteasy-staging</nexus.repository.staging>
+        <nexus.staging.tag>gRPCtoJakartaREST-archetype-${project.version}</nexus.staging.tag>
+
+        <!-- versions -->
         <version.jakarta.ee>10.0.0</version.jakarta.ee>
-        <version.org.jboss.resteasy>6.2.3.Final</version.org.jboss.resteasy>
-        <version.junit>4.13.2</version.junit>
-        <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -50,38 +73,14 @@
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
         </dependency>
-        <dependency>
-        	<groupId>dev.resteasy.grpc</groupId>
-        	<artifactId>grpc-tests</artifactId>
-        	<version>1.0.0.Alpha6</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
         <finalName>${project.artifactId}-${version}</finalName>
         <plugins>
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>net.revelc.code.formatter</groupId>
-                <artifactId>formatter-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>net.revelc.code</groupId>
-                <artifactId>impsort-maven-plugin</artifactId>
-            </plugin>
-           <plugin>
+          <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>${exec-maven-plugin.version}</version>
                 <executions>
 		            <execution>
                         <id>buildjar</id>
@@ -96,7 +95,6 @@
                     </execution>
                 </executions>
            </plugin>
-        </plugins>
-    </build>
-    
+       </plugins>
+   </build>
 </project>
