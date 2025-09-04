@@ -3,7 +3,7 @@
 
     <groupId>dev.resteasy.grpc</groupId>
     <artifactId>gRPCtoJakartaREST-archetype</artifactId>
-    <version>1.0.0.Alpha10-SNAPSHOT</version>
+    <version>1.0.0.Alpha10</version>
     <packaging>maven-archetype</packaging>
     
     <parent>
@@ -29,7 +29,7 @@
         <connection>scm:git:git@github.com:resteasy/gRPCtoJakartaREST-archetype.git</connection>
         <developerConnection>scm:git:git@github.com:resteasy/gRPCtoJakartaREST-archetype.git</developerConnection>
         <url>https://github.com/resteasy/gRPCtoJakartaREST-archetype/</url>
-      <tag>HEAD</tag>
+      <tag>v1.0.0.Alpha10</tag>
   </scm>
 
     <developers>
