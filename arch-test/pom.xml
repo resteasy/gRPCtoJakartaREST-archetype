@@ -7,12 +7,12 @@
     <parent>
         <groupId>dev.resteasy.grpc</groupId>
         <artifactId>resteasy-grpc-test-bom</artifactId>
-        <version>1.0.0.Alpha7</version>
+        <version>1.0.0.Beta1</version>
         <relativePath />
     </parent>
     
     <artifactId>grpc-tests</artifactId>
-    <version>1.0.0.Alpha8</version>
+    <version>1.0.0.Alpha9-SNAPSHOT</version>
 
     <name>grpc-tests</name>
     <description>RESTEasy Main testsuite: gRPC tests</description>
