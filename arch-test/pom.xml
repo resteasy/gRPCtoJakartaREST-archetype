@@ -67,7 +67,7 @@
         <wildfly.grpc.test.feature.pack.version>0.1.12.Final</wildfly.grpc.test.feature.pack.version>
         
         <grpc.example.version>${project.version}</grpc.example.version>
-        <grpc-bridge.version>1.0.0.Alpha7</grpc-bridge.version>        
+        <grpc-bridge.version>1.0.0.Beta1</grpc-bridge.version>        
         <resteasy.version>6.2.11.Final</resteasy.version>
         
         <version.org.jboss.arquillian>1.9.3.Final</version.org.jboss.arquillian>
