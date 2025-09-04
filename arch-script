@@ -33,9 +33,12 @@ mvn archetype:generate -B \
    -Dversion=1.0.0.Alpha8 \
    -Dgenerate-prefix=Greet \
    -Dgenerate-package=dev.resteasy.example.grpc.greet \
-   -Dresteasy-version=6.2.11.Final \
-   -Dgrpc-bridge-version=1.0.0.Alpha7
+   -Dresteasy-version=6.2.12.Final \
+   -Dgrpc-bridge-version=1.0.0.Beta1
 
+#   -Dresteasy-version=6.2.12.Final \
+#   -Dgrpc-bridge-version=1.0.0.Beta1
+   
 # Add resource class for array test
 #echo Copying ArrayResource.java
 #cp -r ../arch-test/src/main/java/ ../arch-build/grpcToRest.example/src/main/java
