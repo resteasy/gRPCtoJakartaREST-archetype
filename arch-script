@@ -27,10 +27,10 @@ echo CREATING grpcToRest.example.grpc
 mvn archetype:generate -B \
    -DarchetypeGroupId=dev.resteasy.grpc \
    -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
-   -DarchetypeVersion=1.0.0.Alpha13-SNAPSHOT \
+   -DarchetypeVersion=1.0.0.Alpha13 \
    -DgroupId=dev.resteasy.examples \
    -DartifactId=grpcToRest.example \
-   -Dversion=1.0.0.Alpha13-SNAPSHOT \
+   -Dversion=1.0.0.Alpha13 \
    -Dgenerate-prefix=Greet \
    -Dgenerate-package=dev.resteasy.example.grpc.greet \
    -Dresteasy-version=6.2.12.Final \
