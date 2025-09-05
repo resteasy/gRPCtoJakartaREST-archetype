@@ -3,7 +3,7 @@
 
     <groupId>dev.resteasy.grpc</groupId>
     <artifactId>gRPCtoJakartaREST-archetype</artifactId>
-    <version>1.0.0.Alpha8-SNAPSHOT</version>
+    <version>1.0.0.Alpha8</version>
     <packaging>maven-archetype</packaging>
     
     <parent>
