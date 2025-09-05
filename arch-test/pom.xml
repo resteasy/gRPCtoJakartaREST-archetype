@@ -12,7 +12,7 @@
     </parent>
     
     <artifactId>grpc-tests</artifactId>
-    <version>1.0.0.Alpha11-SNAPSHOT</version>
+    <version>1.0.0.Alpha12-SNAPSHOT</version>
 
     <name>grpc-tests</name>
     <description>RESTEasy Main testsuite: gRPC tests</description>
@@ -68,7 +68,7 @@
         
         <grpc.example.version>${project.version}</grpc.example.version>
         <grpc-bridge.version>1.0.0.Beta1</grpc-bridge.version>        
-        <resteasy.version>6.2.11.Final</resteasy.version>
+        <resteasy.version>6.2.12.Final</resteasy.version>
         
         <version.org.jboss.arquillian>1.9.3.Final</version.org.jboss.arquillian>
         <version.org.jboss.arquillian.jakarta>10.0.0.Final</version.org.jboss.arquillian.jakarta>
@@ -175,6 +175,18 @@
             <groupId>org.wildfly.arquillian</groupId>
             <artifactId>wildfly-arquillian-container-managed</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-depchain</artifactId>
+            <scope>test</scope>
+            <type>pom</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.inject</groupId>
+                    <artifactId>javax.inject</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

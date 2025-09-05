@@ -1,5 +1,6 @@
 package dev.resteasy.grpc.test;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 //import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -64,8 +66,9 @@ public class GrpcToJakartaRESTTest {
     static Archive<?> deploy() throws Exception {
         WebArchive war = TestUtil.prepareArchive(GrpcToJakartaRESTTest.class.getSimpleName());
         String version = System.getProperty("grpc.example.version", "1.0.0.Alpha8-SNAPSHOT");
-        war.merge(ShrinkWrap.createFromZipFile(WebArchive.class,
-                TestUtil.resolveDependency("dev.resteasy.examples:grpcToRest.example.grpc:war:" + version)));
+        File file = Maven.resolver().resolve("dev.resteasy.examples:grpcToRest.example.grpc:war:" + version)
+                .withoutTransitivity().asSingleFile();
+        war.merge(ShrinkWrap.createFromZipFile(WebArchive.class, file));
         WebArchive archive = (WebArchive) TestUtil.finishContainerPrepare(war, null, (Class<?>[]) null);
         // log.info(archive.toString(true));
         // archive.as(ZipExporter.class).exportTo(new File("/tmp/GrpcToJaxrs.jar"), true);
