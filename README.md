@@ -37,14 +37,14 @@ For example,
         mvn archetype:generate -B \
            -DarchetypeGroupId=dev.resteasy.grpc \
            -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
-           -DarchetypeVersion=1.0.0.Alpha5 \
+           -DarchetypeVersion=1.0.0.Alpha9-SNAPSHOT \
            -DgroupId=dev.resteasy.examples \
            -DartifactId=grpcToRest.example \
-           -Dversion=1.0.0.Alpha7 \
+           -Dversion=1.0.0.Alpha9-SNAPSHOT \
            -Dgenerate-prefix=Greet \
            -Dgenerate-package=dev.resteasy.example.grpc.greet \
-           -Dresteasy-version=6.2.11.Final \
-           -Dgrpc-bridge-version=1.0.0.Alpha6
+           -Dresteasy-version=6.2.12.Final \
+           -Dgrpc-bridge-version=1.0.0.Beta1
            
 Note that "grpc-bridge-version" is the version of the RESTEasy project
 [grpc-bridge](https://github.com/resteasy/resteasy-grpc).

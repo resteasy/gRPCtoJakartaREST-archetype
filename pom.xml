@@ -53,7 +53,12 @@
         
         <archetype-packaging.version>3.2.1</archetype-packaging.version>
         <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
-        
+
+       <maven.test.skip>false</maven.test.skip>
+        <skipTests>${maven.test.skip}</skipTests>
+        <skip.format>false</skip.format>
+        <skip.compile>false</skip.compile>
+
         <!-- maven-release-plugin configuration -->
         <version.central.publishing.maven.plugin>0.8.0</version.central.publishing.maven.plugin>
         <autoVersionSubmodules>true</autoVersionSubmodules>
@@ -121,7 +126,7 @@
     </build>
     
     <profiles>
-               <profile>
+        <profile>
             <id>release</id>
             <activation>
                 <property>
