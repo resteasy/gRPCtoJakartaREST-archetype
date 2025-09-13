@@ -3,7 +3,7 @@
 
     <groupId>dev.resteasy.grpc</groupId>
     <artifactId>gRPCtoJakartaREST-archetype</artifactId>
-    <version>1.0.0.Alpha13-SNAPSHOT</version>
+    <version>1.0.0.Alpha14</version>
     <packaging>maven-archetype</packaging>
     
     <parent>
@@ -29,7 +29,7 @@
         <connection>scm:git:git@github.com:resteasy/gRPCtoJakartaREST-archetype.git</connection>
         <developerConnection>scm:git:git@github.com:resteasy/gRPCtoJakartaREST-archetype.git</developerConnection>
         <url>https://github.com/resteasy/gRPCtoJakartaREST-archetype/</url>
-      <tag>v1.0.0.Alpha12</tag>
+      <tag>v1.0.0.Alpha14</tag>
   </scm>
 
     <developers>
@@ -54,7 +54,7 @@
         <archetype-packaging.version>3.2.1</archetype-packaging.version>
         <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
 
-       <maven.test.skip>false</maven.test.skip>
+        <maven.test.skip>false</maven.test.skip>
         <skipTests>${maven.test.skip}</skipTests>
         <skip.format>false</skip.format>
         <skip.compile>false</skip.compile>
@@ -77,6 +77,17 @@
         <waitUntil>published</waitUntil>
     </properties>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>${sonatype.server.id}</id>
+            <url>${repo.sonatype.url}</url>
+        </snapshotRepository>
+        <repository>
+            <id>${sonatype.server.id}</id>
+            <url>${repo.sonatype.url}</url>
+        </repository>
+    </distributionManagement>
+            
     <build>
         <extensions>
             <extension>
@@ -104,6 +115,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <release>17</release>
+                    <compileSourceRoots>src/main/java</compileSourceRoots>
                 </configuration>
             </plugin>
             <plugin>
@@ -112,124 +124,79 @@
                 <executions>
                     <execution>
                         <id>build</id>
-                        <phase>install</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${basedir}/arch-script</executable>
+                            <executable>${basedir}/arch-test-script</executable>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <configuration>
+                    <rules>
+                        <requireReleaseDeps>
+                            <message>No Snapshots Allowed!</message>
+                        </requireReleaseDeps>
+                    </rules>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <configuration>
+                    <includes>**/*java</includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Prevent gpg from using pinentry programs -->
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>${version.central.publishing.maven.plugin}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>${sonatype.server.id}</publishingServerId>
+                    <autoPublish>${autoPublish}</autoPublish>
+                    <waitUntil>${waitUntil}</waitUntil>
+                    <deploymentName>gRPCtoJakartaREST-archetype-${project.version}</deploymentName>
+                    <excludeArtifacts>
+                        <excludeArtifact>arch-build</excludeArtifact>
+                        <excludeArtifact>arch-example</excludeArtifact>
+                        <excludeArtifact>arch-test</excludeArtifact>
+                    </excludeArtifacts>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-    
-    <profiles>
-        <profile>
-            <id>release</id>
-            <activation>
-                <property>
-                    <name>release</name>
-                </property>
-            </activation>
-
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>${sonatype.server.id}</id>
-                    <url>${repo.sonatype.url}</url>
-                </snapshotRepository>
-                <repository>
-                    <id>${sonatype.server.id}</id>
-                    <url>${repo.sonatype.url}</url>
-                </repository>
-            </distributionManagement>
-
-            <build>
-                <plugins>
-                    <!-- Semantically ordered -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-enforcer-plugin</artifactId>
-                        <configuration>
-                            <rules>
-                                <requireReleaseDeps>
-                                    <message>No Snapshots Allowed!</message>
-                                </requireReleaseDeps>
-                            </rules>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <configuration>
-                            <additionalOptions>
-                                <additionalOption>-html5</additionalOption>
-                            </additionalOptions>
-                            <detectLinks>true</detectLinks>
-                            <doclint>none</doclint>
-                            <failOnError>false</failOnError>
-                            <show>public</show>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                                <configuration>
-                                    <!-- Prevent gpg from using pinentry programs -->
-                                    <gpgArguments>
-                                        <arg>--pinentry-mode</arg>
-                                        <arg>loopback</arg>
-                                    </gpgArguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.central</groupId>
-                        <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>${version.central.publishing.maven.plugin}</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <publishingServerId>${sonatype.server.id}</publishingServerId>
-                            <autoPublish>${autoPublish}</autoPublish>
-                            <waitUntil>${waitUntil}</waitUntil>
-                            <deploymentName>resteasy-grpc-${project.version}</deploymentName>
-                            <!-- Exclude tests from being deployed -->
-                            <excludeArtifacts>
-                                <excludeArtifact>testsuite</excludeArtifact>
-                            </excludeArtifacts>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
