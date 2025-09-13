@@ -46,7 +46,7 @@ public class GreetingTest {
     public static void beforeClass() throws Exception {
         // Establish ServletContext
         Client client = ClientBuilder.newClient();
-        String url = "http://localhost:8080/grpcToRest.example.grpc-1.0.0.Alpha14/grpcToJakartaRest/grpcserver/context";
+        String url = "http://localhost:8080/grpcToRest.example.grpc-1.0.0.Beta2/grpcToJakartaRest/grpcserver/context";
         Response response = client.target(url).request().get();
         Assert.assertEquals(200, response.getStatus());
         client.close();
