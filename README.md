@@ -37,10 +37,10 @@ For example,
         mvn archetype:generate -B \
            -DarchetypeGroupId=dev.resteasy.grpc \
            -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
-           -DarchetypeVersion=1.0.0.Alpha14 \
+           -DarchetypeVersion=1.0.0.Beta2 \
            -DgroupId=dev.resteasy.examples \
            -DartifactId=grpcToRest.example \
-           -Dversion=1.0.0.Alpha14 \
+           -Dversion=1.0.0.Beta2 \
            -Dgenerate-prefix=Greet \
            -Dgenerate-package=dev.resteasy.example.grpc.greet \
            -Dresteasy-version=6.2.12.Final \
@@ -173,10 +173,10 @@ gRPCtoJakartaREST-archetype has a built in testing procedure based on the bash s
     mvn archetype:generate -B \
        -DarchetypeGroupId=dev.resteasy.grpc \
        -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
-       -DarchetypeVersion=1.0.0.Alpha14 \
+       -DarchetypeVersion=1.0.0.Beta2 \
        -DgroupId=dev.resteasy.examples \
        -DartifactId=grpcToRest.example \
-       -Dversion=1.0.0.Alpha14 \
+       -Dversion=1.0.0.Beta2 \
        -Dgenerate-prefix=Greet \
        -Dgenerate-package=dev.resteasy.example.grpc.greet \
        -Dresteasy-version=6.2.11.Final \
