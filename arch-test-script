@@ -2,13 +2,12 @@
 
 DIR=arch-build
 
-echo CLEANING
+echo arch-test-script CLEANING
 cd arch-example
 mvn clean
 cd ../arch-test
 mvn clean
 cd ..
-mvn clean
 
 echo BUILDING arch-example
 cd arch-example
@@ -22,31 +21,29 @@ fi
 cd $DIR
 rm -rf *
     
-echo CREATING grpcToRest.example.grpc
+echo arch-test-script CREATING grpcToRest.example.grpc
 # Create grpcToRest.example skeleton bridge project
 mvn archetype:generate -B \
    -DarchetypeGroupId=dev.resteasy.grpc \
    -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
-   -DarchetypeVersion=1.0.0.Alpha13 \
+   -DarchetypeVersion=1.0.0.Alpha14 \
    -DgroupId=dev.resteasy.examples \
    -DartifactId=grpcToRest.example \
-   -Dversion=1.0.0.Alpha13 \
+   -Dversion=1.0.0.Alpha14 \
    -Dgenerate-prefix=Greet \
    -Dgenerate-package=dev.resteasy.example.grpc.greet \
    -Dresteasy-version=6.2.12.Final \
    -Dgrpc-bridge-version=1.0.0.Beta1
 
-# Add resource class for array test
-#echo Copying ArrayResource.java
-#cp -r ../arch-test/src/main/java/ ../arch-build/grpcToRest.example/src/main/java
-
 # Build bridge project
-echo BUILDING grpcToRest.example
+echo arch-test-script BUILDING grpcToRest.example
 cd grpcToRest.example
 mvn install
 
-echo TESTING
+echo arch-test-script TESTING
 # Run dev.resteasy.grpc.greet.test.GrpcToJakartaRESTTest, which deploys the bridge project WAR
 # to WildFly and makes gRPC invocations on it.
 cd ../../arch-test
 mvn clean install
+
+echo arch-test-script DONE

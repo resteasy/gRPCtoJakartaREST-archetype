@@ -37,10 +37,10 @@ For example,
         mvn archetype:generate -B \
            -DarchetypeGroupId=dev.resteasy.grpc \
            -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
-           -DarchetypeVersion=1.0.0.Alpha9-SNAPSHOT \
+           -DarchetypeVersion=1.0.0.Alpha14 \
            -DgroupId=dev.resteasy.examples \
            -DartifactId=grpcToRest.example \
-           -Dversion=1.0.0.Alpha9-SNAPSHOT \
+           -Dversion=1.0.0.Alpha14 \
            -Dgenerate-prefix=Greet \
            -Dgenerate-package=dev.resteasy.example.grpc.greet \
            -Dresteasy-version=6.2.12.Final \
@@ -142,7 +142,7 @@ Alternatively, the call can be made from a browser or by cURL.
 
 ## Testing the archetype
 
-gRPCtoJakartaREST-archetype has a built in testing procedure based on the bash script arch-script:
+gRPCtoJakartaREST-archetype has a built in testing procedure based on the bash script arch-test-script:
 
 ````
     #!/bin/bash
@@ -155,7 +155,6 @@ gRPCtoJakartaREST-archetype has a built in testing procedure based on the bash s
     cd ../arch-test
     mvn clean
     cd ..
-    mvn clean
 
     echo BUILDING arch-example
     cd arch-example
@@ -174,14 +173,14 @@ gRPCtoJakartaREST-archetype has a built in testing procedure based on the bash s
     mvn archetype:generate -B \
        -DarchetypeGroupId=dev.resteasy.grpc \
        -DarchetypeArtifactId=gRPCtoJakartaREST-archetype \
-       -DarchetypeVersion=1.0.0.Alpha7 \
+       -DarchetypeVersion=1.0.0.Alpha14 \
        -DgroupId=dev.resteasy.examples \
        -DartifactId=grpcToRest.example \
-       -Dversion=1.0.0.Alpha7 \
+       -Dversion=1.0.0.Alpha14 \
        -Dgenerate-prefix=Greet \
        -Dgenerate-package=dev.resteasy.example.grpc.greet \
        -Dresteasy-version=6.2.11.Final \
-       -Dgrpc-bridge-version=1.0.0.Alpha6
+       -Dgrpc-bridge-version=1.0.0.Beta1
 
     # Build bridge project
     echo BUILDING grpcToRest.example
@@ -199,4 +198,4 @@ Running
 
         mvn clean install
 
-from the main gRPCtoJakartaREST-archetype directory will invoke arch-script.    
+from the main gRPCtoJakartaREST-archetype directory will invoke arch-test-script.    
