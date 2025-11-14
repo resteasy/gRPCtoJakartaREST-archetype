@@ -7,11 +7,12 @@
     <parent>
         <groupId>dev.resteasy.grpc</groupId>
         <artifactId>resteasy-grpc-test-bom</artifactId>
-        <version>1.0.0.Beta1</version>
+        <version>1.0.0.Final</version>
         <relativePath />
     </parent>
     
     <artifactId>grpc-tests</artifactId>
+    <version>1.0.0.Final</version>
 
     <name>grpc-tests</name>
     <description>RESTEasy Main testsuite: gRPC tests</description>
@@ -58,21 +59,16 @@
         <!-- Server properties -->
         <server.test.feature.pack.groupId>org.wildfly</server.test.feature.pack.groupId>
         <server.test.feature.pack.artifactId>wildfly-ee-galleon-pack</server.test.feature.pack.artifactId>
-        <server.test.feature.pack.version>37.0.0.Final</server.test.feature.pack.version>
+        <server.test.feature.pack.version>38.0.0.Final</server.test.feature.pack.version>
 
         <!-- grpc feature pack -->
         <wildfly.grpc.test.feature.pack.groupId>org.wildfly.extras.grpc</wildfly.grpc.test.feature.pack.groupId>
         <wildfly.grpc.test.feature.pack.artifactId>wildfly-grpc-feature-pack</wildfly.grpc.test.feature.pack.artifactId>
-        <wildfly.grpc.test.feature.pack.version>0.1.12.Final</wildfly.grpc.test.feature.pack.version>
+        <wildfly.grpc.test.feature.pack.version>0.1.14.Final</wildfly.grpc.test.feature.pack.version>
         
         <grpc.example.version>${project.version}</grpc.example.version>
-        <grpc-bridge.version>1.0.0.Beta1</grpc-bridge.version>        
-        <resteasy.version>6.2.12.Final</resteasy.version>
-        
-        <version.org.jboss.arquillian>1.9.3.Final</version.org.jboss.arquillian>
-        <version.org.jboss.arquillian.jakarta>10.0.0.Final</version.org.jboss.arquillian.jakarta>
-        <version.org.jboss.shrinkwrap.resolver>3.3.3</version.org.jboss.shrinkwrap.resolver>
-        <version.org.wildfly.arquillian>5.1.0.Beta9</version.org.wildfly.arquillian>
+        <grpc-bridge.version>1.0.0.Final</grpc-bridge.version>        
+        <resteasy.version>7.0.0.Final</resteasy.version>
     </properties>
 
     <profiles>
