@@ -12,6 +12,7 @@
     </parent>
     
     <artifactId>grpc-tests</artifactId>
+    <version>1.0.0.Final-SNAPSHOT</version>
 
     <name>grpc-tests</name>
     <description>RESTEasy Main testsuite: gRPC tests</description>
@@ -58,12 +59,12 @@
         <!-- Server properties -->
         <server.test.feature.pack.groupId>org.wildfly</server.test.feature.pack.groupId>
         <server.test.feature.pack.artifactId>wildfly-ee-galleon-pack</server.test.feature.pack.artifactId>
-        <server.test.feature.pack.version>37.0.0.Final</server.test.feature.pack.version>
+        <server.test.feature.pack.version>38.0.0.Final</server.test.feature.pack.version>
 
         <!-- grpc feature pack -->
         <wildfly.grpc.test.feature.pack.groupId>org.wildfly.extras.grpc</wildfly.grpc.test.feature.pack.groupId>
         <wildfly.grpc.test.feature.pack.artifactId>wildfly-grpc-feature-pack</wildfly.grpc.test.feature.pack.artifactId>
-        <wildfly.grpc.test.feature.pack.version>0.1.12.Final</wildfly.grpc.test.feature.pack.version>
+        <wildfly.grpc.test.feature.pack.version>0.1.14.Final</wildfly.grpc.test.feature.pack.version>
         
         <grpc.example.version>1.0.1.Final</grpc.example.version>
         <grpc-bridge.version>1.0.0.Final</grpc-bridge.version>        
