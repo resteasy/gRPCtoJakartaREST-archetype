@@ -7,7 +7,7 @@
     <parent>
         <groupId>dev.resteasy.grpc</groupId>
         <artifactId>resteasy-grpc-test-bom</artifactId>
-        <version>1.0.0.Beta1</version>
+        <version>1.0.0.Final</version>
         <relativePath />
     </parent>
     
@@ -65,9 +65,10 @@
         <wildfly.grpc.test.feature.pack.artifactId>wildfly-grpc-feature-pack</wildfly.grpc.test.feature.pack.artifactId>
         <wildfly.grpc.test.feature.pack.version>0.1.12.Final</wildfly.grpc.test.feature.pack.version>
         
-        <grpc.example.version>${project.version}</grpc.example.version>
-        <grpc-bridge.version>1.0.0.Beta1</grpc-bridge.version>        
-        <resteasy.version>6.2.12.Final</resteasy.version>
+        <grpc.example.version>1.0.1.Final</grpc.example.version>
+        <grpc-bridge.version>1.0.0.Final</grpc-bridge.version>        
+        <resteasy.version>7.0.0.Final</resteasy.version>
+        <com.google.protobuf.version>4.31.1</com.google.protobuf.version>
         
         <version.org.jboss.arquillian>1.9.3.Final</version.org.jboss.arquillian>
         <version.org.jboss.arquillian.jakarta>10.0.0.Final</version.org.jboss.arquillian.jakarta>
@@ -138,17 +139,28 @@
         <dependency>
             <groupId>dev.resteasy.grpc</groupId>
             <artifactId>resteasy-grpc-test-bom</artifactId>
-            <version>${grpc-bridge.version}</version>
+            <version>${project.parent.version}</version>
             <scope>test</scope>
             <type>pom</type>
         </dependency>
         <dependency>
 			<groupId>dev.resteasy.examples</groupId>
 			<artifactId>grpcToRest.example.grpc</artifactId>
-			<version>${project.version}</version>
+			<version>${grpc.example.version}</version>
 			<scope>test</scope>
 			<type>jar</type>
 		</dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protoc</artifactId>
+            <version>${com.google.protobuf.version}</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty-shaded</artifactId>
